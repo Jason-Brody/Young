@@ -111,9 +111,9 @@ namespace Young.Data
                 string name = p.Name;
                 if (parentName != "")
                     name = parentName + "." + name;
-                if (p.GetCustomAttributes(typeof(RequiredAttribute), true).Count() > 0)
+                if (p.GetCustomAttributes(typeof(FromTable), true).Count() > 0)
                 {
-                    RequiredAttribute bizData = p.GetCustomAttributes(typeof(RequiredAttribute), true).First() as RequiredAttribute;
+                    FromTable bizData = p.GetCustomAttributes(typeof(FromTable), true).First() as FromTable;
                     if (bizData.NickName != null && bizData.NickName != "")
                         name = bizData.NickName;
                     if (p.PropertyType.IsPrimitive || p.PropertyType == typeof(string))
