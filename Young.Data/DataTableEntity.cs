@@ -111,11 +111,11 @@ namespace Young.Data
                 string name = p.Name;
                 if (parentName != "")
                     name = parentName + "." + name;
-                if (p.GetCustomAttributes(typeof(FromTable), true).Count() > 0)
+                if (p.GetCustomAttributes(typeof(BizDataAttribute), true).Count() > 0)
                 {
-                    FromTable bizData = p.GetCustomAttributes(typeof(FromTable), true).First() as FromTable;
-                    if (bizData.NickName != null && bizData.NickName != "")
-                        name = bizData.NickName;
+                    BizDataAttribute bizData = p.GetCustomAttributes(typeof(BizDataAttribute), true).First() as BizDataAttribute;
+                    if (bizData.Name != null && bizData.Name != "")
+                        name = bizData.Name;
                     if (p.PropertyType.IsPrimitive || p.PropertyType == typeof(string))
                         dataAction(name, p, data);
                     else if (p.PropertyType.IsClass)

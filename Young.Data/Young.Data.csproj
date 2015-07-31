@@ -44,7 +44,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\FromTable.cs" />
+    <Compile Include="Attributes\BizDataAttribute.cs" />
     <Compile Include="DataTableEntity.cs" />
     <Compile Include="DBConnection\DBAccess.cs" />
     <Compile Include="Extension\DataTableExtension.cs" />
