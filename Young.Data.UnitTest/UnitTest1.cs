@@ -23,5 +23,12 @@ namespace Young.Data.UnitTest
             ds = da.GetData(new SqlDataAdapter(), "select top 10 * from Users", CommandType.Text);
             Assert.IsTrue(ds.Tables.Count > 0);
         }
+        
+        [TestMethod]
+        public void TestMethod2()
+        {
+            var table1 = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube",new Range(2,2),new Range(4,4));
+            var table = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube", null,null);
+        }
     }
 }
