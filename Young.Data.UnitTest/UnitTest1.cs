@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Young.Data.DBConnection;
 using System.Data.SqlClient;
 using System.Data;
+using Young.Data.Extension;
 
 namespace Young.Data.UnitTest
 {
@@ -12,6 +13,9 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void TestMethod1()
         {
+            
+
+
             SqlConnectionStringBuilder ssb = new SqlConnectionStringBuilder();
             ssb.DataSource = "localhost";
             ssb.InitialCatalog = "SAPTestCenter";
@@ -19,6 +23,13 @@ namespace Young.Data.UnitTest
             SqlConnection sqlCn = new SqlConnection(ssb.ConnectionString);
             DBAccess da = new DBAccess(sqlCn,new SqlCommand());
             DataSet ds = da.GetData(new SqlDataAdapter(), "select top 10 * from Users", CommandType.Text);
+            ds.Tables[0].TableName = "Users";
+
+            //ds.Tables[0].ExportToExcel(@"C:\1.xlsx", "");
+
+            ExcelHelper.Current.Create(@"C:\1.xlsx").Write(ds.Tables[0]);
+            ExcelHelper.Current.Close();
+
             Assert.IsTrue(ds.Tables.Count > 0);
             ds = da.GetData(new SqlDataAdapter(), "select top 10 * from Users", CommandType.Text);
             Assert.IsTrue(ds.Tables.Count > 0);

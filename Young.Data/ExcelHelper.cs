@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Packaging;
+﻿using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
@@ -66,6 +67,10 @@ namespace Young.Data
 
         public ExcelHelper Create(string ExcelFile)
         {
+            _doc = SpreadsheetDocument.Create(ExcelFile, SpreadsheetDocumentType.Workbook);
+            _wbPart = _doc.AddWorkbookPart();
+            _wbPart.Workbook = new Workbook();
+            _doc.WorkbookPart.Workbook.AppendChild<Sheets>(new Sheets());
             return _instance;
         }
 
@@ -88,6 +93,22 @@ namespace Young.Data
                     ds.Tables.Add(dt);
                 }
                     
+            }
+            return ds;
+        }
+
+        public DataSet Read(params string[] sheetNames)
+        {
+            DataSet ds = new DataSet();
+            var sheets = _wbPart.Workbook.Descendants<Sheet>();
+            foreach (var sheet in sheets)
+            {
+                if (sheetNames.Contains(sheet.Name.Value.ToLower()))
+                {
+                    DataTable dt = read(sheet);
+                    ds.Tables.Add(dt);
+                }
+
             }
             return ds;
         }
@@ -311,6 +332,99 @@ namespace Young.Data
                 }
             }
             return value;
+        }
+
+        public void Write(DataTable dt)
+        {
+            var sheets = _wbPart.Workbook.Descendants<Sheet>();
+            var sheet = sheets.Where(c => c.Name.Value.ToLower() == dt.TableName.ToLower()).FirstOrDefault();
+            WorksheetPart wsPart = null;
+            if(sheet==null)
+            {
+                wsPart = _wbPart.AddNewPart<WorksheetPart>();
+                wsPart.Worksheet = new Worksheet(new SheetData());
+                sheet = new Sheet()
+                {
+                    Id = _wbPart.GetIdOfPart(wsPart),
+                    Name = dt.TableName,
+                    SheetId = 1
+                };
+                _wbPart.Workbook.GetFirstChild<Sheets>().Append(sheet);
+            }
+            else
+            {
+                wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
+                wsPart.Worksheet.GetFirstChild<SheetData>().RemoveAllChildren();
+            }
+
+            SheetData sheetData = wsPart.Worksheet.GetFirstChild<SheetData>();
+
+            Row headRow = new Row();
+            headRow.RowIndex = 1;
+
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                Cell c = new Cell();
+                c.DataType = new EnumValue<CellValues>(CellValues.String);
+                c.CellReference = getColumnName(i + 1) + "1";
+                c.CellValue = new CellValue(dt.Columns[i].ColumnName);
+                headRow.AppendChild(c);
+            }
+            sheetData.AppendChild(headRow);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Row r = new Row();
+                r.RowIndex = (UInt32)i + 2;
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    Cell c = new Cell();
+                    c.DataType = new EnumValue<CellValues>(getCellType(dt.Columns[j].DataType));
+                    c.CellReference = getColumnName(j + 1) + r.RowIndex.ToString();
+
+                    DataRow dr = dt.Rows[i];
+
+                    if(dr.IsNull(j))
+                    {
+                        c.CellValue = new CellValue("");
+                    }
+                    else if (c.DataType.Value == CellValues.Boolean)
+                    {
+                        string value = bool.Parse(dt.Rows[i][j].ToString()) ? "1" : "0";
+                        c.CellValue = new CellValue(value);
+                    }
+                    else
+                    {
+                        c.CellValue = new CellValue(dt.Rows[i][j].ToString());
+                    }
+
+                    r.Append(c);
+                }
+                sheetData.Append(r);
+            }
+
+            _wbPart.Workbook.Save();
+        }
+
+        private  CellValues getCellType(Type dataType)
+        {
+            if (dataType == typeof(string))
+            {
+                return CellValues.String;
+            }
+            else if (dataType == typeof(DateTime))
+            {
+                return CellValues.String;
+            }
+            else if (dataType == typeof(Boolean))
+            {
+                return CellValues.Boolean;
+            }
+            else
+            {
+                return CellValues.Number;
+            }
         }
     }
 }
