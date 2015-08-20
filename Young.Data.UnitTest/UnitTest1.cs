@@ -4,6 +4,7 @@ using Young.Data.DBConnection;
 using System.Data.SqlClient;
 using System.Data;
 using Young.Data.Extension;
+using System.Text.RegularExpressions;
 
 namespace Young.Data.UnitTest
 {
@@ -38,8 +39,22 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void TestMethod2()
         {
-            var table1 = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube",new Range(2,2),new Range(4,4));
-            var table = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube", null,null);
+            var table = ExcelHelper.Current.Open(@"C:\test.xlsx").Read("SC_4001");
+            //var table1 = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube",new Range(2,2),new Range(4,4));
+            //var table = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube", null,null);
+            
+
+        }
+
+        [TestMethod]
+        public void SplitTest()
+        {
+
+            string input = "AB22";
+                string[] numbers = Regex.Split(input, @"\d+");
+                Console.WriteLine(numbers[0]);
+            
+            
         }
     }
 }
