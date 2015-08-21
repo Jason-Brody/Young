@@ -5,6 +5,10 @@ using System.Data.SqlClient;
 using System.Data;
 using Young.Data.Extension;
 using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Young.Data.Attributes;
 
 namespace Young.Data.UnitTest
 {
@@ -39,7 +43,7 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void TestMethod2()
         {
-            var table = ExcelHelper.Current.Open(@"C:\test.xlsx").Read("SC_4001");
+            var table = ExcelHelper.Current.Open(@"C:\test.xlsx").Read("Sheet1",new Range(1,2),new Range(10,4));
             //var table1 = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube",new Range(2,2),new Range(4,4));
             //var table = ExcelHelper.Current.Open(@"D:\06005.xlsx").Read("FA_Recon_BWToListCube", null,null);
             
@@ -56,5 +60,59 @@ namespace Young.Data.UnitTest
             
             
         }
+
+        [TestMethod]
+        public void GetCharValueTest()
+        {
+            string testStr = "AAA";
+            double value = 0;
+
+
+
+            var arrayList = testStr.ToList();
+            while(arrayList.Count > 0)
+            {
+                char first = arrayList.First();
+                arrayList.Remove(first);
+                value += (Convert.ToInt16(first) - 64) * Math.Pow(26,arrayList.Count);
+               
+            }
+        }
+
+        [TestMethod]
+        public void BindingTest()
+        {
+            DataDriven.Data = ExcelHelper.Current.Open(@"D:\test1.xlsx").ReadAll();
+            DataDriven.CurrentId = 1;
+            DataDriven.NonSharedTables = new List<string>();
+            TestC t = new TestC();
+            t.DataBinding();
+        }
+    }
+
+    [DataBinding("1")]
+    public class TestC:DataDriven
+    {
+        public TestC():base(true)
+        {
+
+        }
+        [ColumnBinding]
+        public string Test { get; set; }
+
+        [ColumnBinding]
+        public string A { get; set; }
+
+        [ColumnBinding]
+        public string B { get; set; }
+
+        [ColumnBinding]
+        public string C { get; set; }
+
+        [ColumnBinding]
+        public string D { get; set; }
+
+        [ColumnBinding]
+        public string Name { get; set; }
     }
 }

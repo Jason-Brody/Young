@@ -48,6 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\BizDataAttribute.cs" />
+    <Compile Include="Attributes\ColumnBindingAttribute.cs" />
+    <Compile Include="Attributes\DataBindingAttribute.cs" />
+    <Compile Include="Attributes\MethodBindingAttribute.cs" />
+    <Compile Include="Attributes\MultiColumnBindingAttribute.cs" />
+    <Compile Include="Attributes\OrderAttribute.cs" />
+    <Compile Include="CycleType.cs" />
+    <Compile Include="DataDirectory.cs" />
+    <Compile Include="DataDriven.cs" />
     <Compile Include="DataTableEntity.cs" />
     <Compile Include="DBConnection\DBAccess.cs" />
     <Compile Include="ExcelHelper.cs" />
@@ -60,9 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

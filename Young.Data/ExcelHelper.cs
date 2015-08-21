@@ -121,8 +121,7 @@ namespace Young.Data
             {
                 throw new ArgumentNullException(sheetName);
             }
-            //return read1(sheet);
-            return Read(sheetName,null,null);
+            return read(sheet);
         }
 
 
@@ -134,7 +133,7 @@ namespace Young.Data
         /// <param name="end"></param>
         /// <param name="HeaderRow"></param>
         /// <returns></returns>
-        public DataTable Read(string sheetName,Range start,Range end,int HeaderRow = 0)
+        public DataTable Read(string sheetName,Range start,Range end,int HeaderRow = 1)
         {
             Sheet sheet = _wbPart.Workbook.Descendants<Sheet>().Where(s => s.Name == sheetName).FirstOrDefault();
             if (sheet == null)
@@ -177,121 +176,86 @@ namespace Young.Data
             dt.Rows.Add(dr);
         }
 
-        private DataTable read(Sheet sheet, Range start, Range end,int tableHeaderRow = 0)
+        private void renameColumn(DataTable dt)
         {
-            DataTable dt = new DataTable(sheet.Name);
-            WorksheetPart wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
-            var rows = wsPart.Worksheet.Descendants<Row>();
-            var columnRow = rows.ElementAt(tableHeaderRow);
-
-            createColumns(dt, columnRow);
-
-
-            int columnCount = dt.Columns.Count;
-            int rowCount = rows.Count();
-
-            //set initial for both start and end if they are null
-            if (start == null)
-                start = new Range() { Row = tableHeaderRow + 2, Column = 1};
-            if (end == null)
-                end = new Range() { Row = rowCount, Column = columnCount};
-
-
-            if (end.Row > rowCount)
-                end.Row = rowCount;
-            if (end.Column > columnCount)
-                end.Column = columnCount;
-
-
-            start.Row = start.Row < 2 ? 1 : start.Row - 1;
-            start.Column = start.Column < 1 ? 0 : start.Column - 1;
-
-
-
-
-            //remove first column
-            if(start.Column>0)
+            foreach (DataColumn dc in dt.Columns)
             {
-                for(int i = 0;i<start.Column;i++)
-                {
-                    dt.Columns.RemoveAt(0);
-                }
+                dc.ColumnName = _colNameMapping[dc.ColumnName];
             }
-            //remove last column
-            if(end.Column < columnCount)
-            {
-                for(int i=0;i<columnCount - end.Column;i++)
-                {
-                    dt.Columns.RemoveAt(dt.Columns.Count-1);
-                }
-            }
-
-            if(start.Row < end.Row && start.Column < end.Column)
-            {
-                for(int i = start.Row;i<end.Row;i++)
-                {
-                    DataRow dr = dt.NewRow();
-                    var row = rows.ElementAt<Row>(i);
-                    var cells = row.Descendants<Cell>();
-                    int cellCount = cells.Count();
-                    for(int j = start.Column;j<end.Column;j++)
-                    {
-                        string value = "";
-                        if (cellCount > j)
-                            value = getCellValue(cells.ElementAt<Cell>(j));
-                        dr[j-start.Column] = value;
-                    } 
-                    dt.Rows.Add(dr);
-                }
-            }
-
-            return dt;
-
         }
 
-        private DataTable read(Sheet sheet)
-        {
-            
-            WorksheetPart wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
-            DataTable dt = new DataTable(sheet.Name);
+        //private DataTable read(Sheet sheet, Range start, Range end,int tableHeaderRow = 0)
+        //{
+        //    DataTable dt = new DataTable(sheet.Name);
+        //    WorksheetPart wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
+        //    var rows = wsPart.Worksheet.Descendants<Row>();
+        //    var columnRow = rows.ElementAt(tableHeaderRow);
 
-            bool isTableCreate = false;
-            int columnCount = 0;
-            foreach(var row in wsPart.Worksheet.Descendants<Row>())
-            {
-                if(!isTableCreate)
-                {
-                    var cells = row.Descendants<Cell>();
-                    columnCount = cells.Count();
-                    foreach (var cell in cells)
-                    {
-                        string value = getCellValue(cell);
-                        DataColumn dc = new DataColumn(value);
-                        dt.Columns.Add(dc);
-                    }
-                    isTableCreate = true;
-                    
-                }
-                else
-                {
-                    DataRow dr = dt.NewRow();
-                    var cells = row.Descendants<Cell>();
-                    int count = cells.Count();
-                    for (int i = 0; i < columnCount;i++ )
-                    {
-                        string value = "";
-                        if (count > i)
-                            value = getCellValue(cells.ElementAt<Cell>(i));
-                        dr[i] = value;
-                    }
-                    dt.Rows.Add(dr);
-                        
-                }
-            }
-            
-            return dt;
-            
-        }
+        //    createColumns(dt, columnRow);
+
+
+        //    int columnCount = dt.Columns.Count;
+        //    int rowCount = rows.Count();
+
+        //    //set initial for both start and end if they are null
+        //    if (start == null)
+        //        start = new Range() { Row = tableHeaderRow + 2, Column = 1};
+        //    if (end == null)
+        //        end = new Range() { Row = rowCount, Column = columnCount};
+
+
+        //    if (end.Row > rowCount)
+        //        end.Row = rowCount;
+        //    if (end.Column > columnCount)
+        //        end.Column = columnCount;
+
+
+        //    start.Row = start.Row < 2 ? 1 : start.Row - 1;
+        //    start.Column = start.Column < 1 ? 0 : start.Column - 1;
+
+
+
+
+        //    //remove first column
+        //    if(start.Column>0)
+        //    {
+        //        for(int i = 0;i<start.Column;i++)
+        //        {
+        //            dt.Columns.RemoveAt(0);
+        //        }
+        //    }
+        //    //remove last column
+        //    if(end.Column < columnCount)
+        //    {
+        //        for(int i=0;i<columnCount - end.Column;i++)
+        //        {
+        //            dt.Columns.RemoveAt(dt.Columns.Count-1);
+        //        }
+        //    }
+
+        //    if(start.Row < end.Row && start.Column < end.Column)
+        //    {
+        //        for(int i = start.Row;i<end.Row;i++)
+        //        {
+        //            DataRow dr = dt.NewRow();
+        //            var row = rows.ElementAt<Row>(i);
+        //            var cells = row.Descendants<Cell>();
+        //            int cellCount = cells.Count();
+        //            for(int j = start.Column;j<end.Column;j++)
+        //            {
+        //                string value = "";
+        //                if (cellCount > j)
+        //                    value = getCellValue(cells.ElementAt<Cell>(j));
+        //                dr[j-start.Column] = value;
+        //            } 
+        //            dt.Rows.Add(dr);
+        //        }
+        //    }
+
+        //    return dt;
+
+        //}
+
 
         private DataTable createTable(List<List<string>> datas,string tableName)
         {
@@ -319,7 +283,7 @@ namespace Young.Data
 
         }
 
-        private static string getColumnName(int columnIndex)
+        private string getColumnName(int columnIndex)
         {
             int dividend = columnIndex;
             string columnName = String.Empty;
@@ -331,8 +295,21 @@ namespace Young.Data
                 columnName = Convert.ToChar(65 + modifier).ToString() + columnName;
                 dividend = (int)((dividend - modifier) / 26);
             }
-
+            
             return columnName;
+        }
+
+        private int getColumnValue(string columnName)
+        {
+            double value = 0;
+            var arrayList = columnName.ToList();
+            while (arrayList.Count > 0)
+            {
+                char first = arrayList.First();
+                arrayList.Remove(first);
+                value += (Convert.ToInt16(first) - 64) * Math.Pow(26, arrayList.Count);
+            }
+            return Convert.ToInt16(value);
         }
 
         private string getCellValue(Cell cell)
@@ -460,7 +437,7 @@ namespace Young.Data
 
         private Dictionary<string, string> _colNameMapping;
 
-        private DataTable read1(Sheet sheet)
+        private DataTable read(Sheet sheet)
         {
 
             WorksheetPart wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
@@ -479,103 +456,57 @@ namespace Young.Data
                 }
             }
 
-            foreach(DataColumn dc in dt.Columns)
-            {
-                dc.ColumnName = _colNameMapping[dc.ColumnName];
-            }
+            renameColumn(dt);
 
             return dt;
 
         }
 
-        private DataTable read1(Sheet sheet, Range start, Range end, int tableHeaderRow = 0)
+        private DataTable read(Sheet sheet, Range start, Range end, int tableHeaderRow = 1)
         {
             DataTable dt = new DataTable(sheet.Name);
             WorksheetPart wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
 
-            bool isTableCreate = false;
-
-            foreach(var row in wsPart.Worksheet.Descendants<Row>())
+            var headerRow = wsPart.Worksheet.Descendants<Row>().Where(r => r.RowIndex == tableHeaderRow).FirstOrDefault();
+            if(headerRow != null)
             {
-                if(!isTableCreate)
-                {
-                    if (row.RowIndex.Value == start.Row)
-                    {
-                        createColumns(dt, row);
-                        isTableCreate = true;
-                    }
-                }
-                else
-                {
+                createColumns(dt, headerRow);
+            }
 
-                }
+            foreach(var cell in headerRow.Descendants<Cell>())
+            {
                 
-            }
+                string colN = Regex.Split(cell.CellReference.Value, @"\d+").First();
+                int colV = getColumnValue(colN);
 
-
-            var rows = wsPart.Worksheet.Descendants<Row>();
-            var columnRow = rows.ElementAt(tableHeaderRow);
-
-            createColumns(dt, columnRow);
-
-
-            int columnCount = dt.Columns.Count;
-            int rowCount = rows.Count();
-
-            //set initial for both start and end if they are null
-            if (start == null)
-                start = new Range() { Row = tableHeaderRow + 2, Column = 1 };
-            if (end == null)
-                end = new Range() { Row = rowCount, Column = columnCount };
-
-
-            if (end.Row > rowCount)
-                end.Row = rowCount;
-            if (end.Column > columnCount)
-                end.Column = columnCount;
-
-
-            start.Row = start.Row < 2 ? 1 : start.Row - 1;
-            start.Column = start.Column < 1 ? 0 : start.Column - 1;
-
-
-
-
-            //remove first column
-            if (start.Column > 0)
-            {
-                for (int i = 0; i < start.Column; i++)
+                if(colV <start.Column|| colV>end.Column)
                 {
-                    dt.Columns.RemoveAt(0);
-                }
-            }
-            //remove last column
-            if (end.Column < columnCount)
-            {
-                for (int i = 0; i < columnCount - end.Column; i++)
-                {
-                    dt.Columns.RemoveAt(dt.Columns.Count - 1);
-                }
-            }
-
-            if (start.Row < end.Row && start.Column < end.Column)
-            {
-                for (int i = start.Row; i < end.Row; i++)
-                {
-                    DataRow dr = dt.NewRow();
-                    var row = rows.ElementAt<Row>(i);
-                    var cells = row.Descendants<Cell>();
-                    int cellCount = cells.Count();
-                    for (int j = start.Column; j < end.Column; j++)
+                    if(_colNameMapping.ContainsKey(colN))
                     {
-                        string value = "";
-                        if (cellCount > j)
-                            value = getCellValue(cells.ElementAt<Cell>(j));
-                        dr[j - start.Column] = value;
+                        _colNameMapping.Remove(colN);
+                        dt.Columns.Remove(colN);
                     }
-                    dt.Rows.Add(dr);
                 }
             }
+
+            
+            
+
+            if (start.Row == tableHeaderRow)
+            {
+                start.Row += 1;
+            }
+                
+
+            var bodyRows = wsPart.Worksheet.Descendants<Row>().Where(r => r.RowIndex >= start.Row && r.RowIndex <= end.Row);
+
+            foreach(var row in bodyRows)
+            {
+                addRow(dt, row);
+            }
+
+            renameColumn(dt);
+
 
             return dt;
 
