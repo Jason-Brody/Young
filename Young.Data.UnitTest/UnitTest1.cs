@@ -18,9 +18,6 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            
-
-
             SqlConnectionStringBuilder ssb = new SqlConnectionStringBuilder();
             ssb.DataSource = "localhost";
             ssb.InitialCatalog = "SAPTestCenter";
@@ -87,13 +84,14 @@ namespace Young.Data.UnitTest
             DataDriven.NonSharedTables = new List<string>();
             TestC t = new TestC();
             t.DataBinding();
+           
         }
     }
 
     [DataBinding("1")]
     public class TestC:DataDriven
     {
-        public TestC():base(true)
+        public TestC():base(false)
         {
 
         }
