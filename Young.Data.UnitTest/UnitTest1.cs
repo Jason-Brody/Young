@@ -9,6 +9,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Young.Data.Attributes;
+using SAPAutomation;
+using SAPFEWSELib;
 
 namespace Young.Data.UnitTest
 {
@@ -83,18 +85,85 @@ namespace Young.Data.UnitTest
             DataDriven.CurrentId = 1;
             DataDriven.NonSharedTables = new List<string>();
             TestC t = new TestC();
-            t.DataBinding();
+            
            
+            t.DataBinding();
+            var msg = TestC.Msg;
         }
+
+
+        [TestMethod]
+        public void SAPCompTest()
+        {
+            SAPTestHelper.Current.SetSession();
+
+            var control = SAPTestHelper.Current.MainWindow.FindByName<GuiContainerShell>("shellcont[1]").FindByName<GuiTextedit>("shell");
+
+            var tree = SAPTestHelper.Current.MainWindow.FindByName<GuiContainerShell>("shellcont[0]").FindByName<GuiTree>("shell");
+            var node = tree.GetNextNodeKey(tree.TopNode);
+            tree.SelectNode(node);
+            var comp = SAPTestHelper.Current.MainWindow.FindByName<GuiComboBox>("VBAK-AUGRU");
+            string b= "";
+            string v = "";
+            foreach(GuiComboBoxEntry keyV in comp.GetEntries())
+            {
+                b += string.Format("Key:{0} -> Pos:{1} -> Val:{2}\n", keyV.Key, keyV.Pos, keyV.Value);
+                if(keyV.Key=="C02")
+                {
+                    v = keyV.Value;
+                }
+            }
+        }
+
+       
+    }
+
+    
+
+    public class TestBase:DataDriven
+    {
+        public static string Msg = "";
+        public TestBase(bool isShare):base(isShare)
+        {
+            OnSettingProperty += (o, e) =>
+            {
+                var str = string.Format("Set Property:{0} values {1}\n", e.Property.Name, e.Value);
+                Msg += str;
+            };
+        }
+
+
+    }
+
+    [DataBinding]
+    public class TestA:TestBase
+    {
+        public TestA():base(true)
+        {
+
+        }
+
+        [ColumnBinding]
+        public string A { get; set; }
+
+        [ColumnBinding]
+        public string B { get; set; }
+
+        [ColumnBinding]
+        public string C { get; set; }
     }
 
     [DataBinding("1")]
-    public class TestC:DataDriven
+    public class TestC:TestBase
     {
         public TestC():base(false)
         {
 
         }
+
+        [ColumnBinding]
+        public TestA TestA { get; set; }
+
         [ColumnBinding]
         public string Test { get; set; }
 

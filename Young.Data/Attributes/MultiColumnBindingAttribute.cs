@@ -16,14 +16,26 @@ namespace Young.Data.Attributes
 
         public string[] ColNames { get; set; }
 
-        public MultiColumnBindingAttribute(string[] Cols, string MethodName)
+        public string GroupIdColumnName { get; set; }
+
+        public MultiColumnBindingAttribute(string GroupIdColumnName, string[] Cols, string MethodName)
         {
             this.ColNames = Cols;
             this.MethodName = MethodName;
             this.Directory = DataDirectory.Input;
+            this.GroupIdColumnName = GroupIdColumnName;
+        }
+
+        public MultiColumnBindingAttribute(string[] Cols,string MethodName):this("GroupId",Cols,MethodName)
+        {
+
         }
 
         public DataDirectory Directory { get; set; }
 
+
     }
+
+
+   
 }

@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Young.Data
 {
-    public enum LoopMode
+    public enum RecursionMode
     {
-        Default = 0,
-        AutoIncrease = 1
+        NoRecursion = 0,
+        Recursion = 1
     }
 }

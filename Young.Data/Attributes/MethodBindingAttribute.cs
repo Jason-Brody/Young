@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Young.Data.Attributes
 {
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class MethodBindingAttribute : OrderAttribute
     {
         public string[] ParameterNames { get; set; }
