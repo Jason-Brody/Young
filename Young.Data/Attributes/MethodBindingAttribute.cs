@@ -9,7 +9,9 @@ namespace Young.Data.Attributes
     public class MethodBindingAttribute : OrderAttribute
     {
         public string[] ParameterNames { get; set; }
-        public MethodBindingAttribute() { }
+        public MethodBindingAttribute() {
+            this.Order = 99;
+        }
 
 
     }

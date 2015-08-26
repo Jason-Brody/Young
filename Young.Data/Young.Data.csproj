@@ -52,11 +52,10 @@
     <Compile Include="Attributes\ComplexSampleDataAttribute.cs" />
     <Compile Include="Attributes\DataBindingAttribute.cs" />
     <Compile Include="Attributes\MethodBindingAttribute.cs" />
-    <Compile Include="Attributes\MultiColumnBindingAttribute.cs" />
     <Compile Include="Attributes\OrderAttribute.cs" />
     <Compile Include="Attributes\DataGroupAttribute.cs" />
     <Compile Include="Attributes\SingleSampleDataAttribute.cs" />
-    <Compile Include="CycleType.cs" />
+    <Compile Include="DataBindingFactory.cs" />
     <Compile Include="DataDirectory.cs" />
     <Compile Include="DataDriven.cs" />
     <Compile Include="DataTableEntity.cs" />
@@ -65,7 +64,7 @@
     <Compile Include="Extension\DataTableExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
-    <Compile Include="RecursionMode.cs" />
+    <Compile Include="BindingMode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Source\" />

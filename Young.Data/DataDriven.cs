@@ -8,7 +8,9 @@ using Young.Data.Attributes;
 
 namespace Young.Data
 {
-    public delegate void OnSettingPropertyHander(object sender,SetPropertyArgs e);
+    public delegate void OnSettingPropertyHander(object sender, SetPropertyArgs e);
+
+    public delegate T Convert<T>(DataRow[] rows);
 
     public class DataDriven
     {
@@ -16,10 +18,10 @@ namespace Young.Data
 
         private static List<string> _privateTables;
 
-        public static bool IsSampleMode { get; set; }
+
         static DataDriven()
         {
-            BindingMode = LoopMode.Default;
+            GlobalBindingModeType = new BindingMode();
         }
 
         public DataDriven()
@@ -27,14 +29,10 @@ namespace Young.Data
             me = this.GetType();
         }
 
-        public DataDriven(bool Shared)
-        {
-            this.Shared = Shared;
-        }
-
         protected Type me;
 
         private DataBindingAttribute dba;
+
 
 
         public static DataSet Data { get; set; }
@@ -45,6 +43,7 @@ namespace Young.Data
 
         public static List<string> NonSharedTables
         {
+
             get { return _privateTables; }
             set
             {
@@ -53,13 +52,13 @@ namespace Young.Data
             }
         }
 
-        public RecursionMode Recursion { get; set; }
+        public static BindingMode GlobalBindingModeType { get; set; }
 
-        public static LoopMode BindingMode { get; set; }
+        public BindingMode BindingModeType { get; set; }
+
+        private BindingMode _bindingType;
 
         private static Dictionary<string, string> _tableMapping;
-
-        public bool Shared { get; set; }
 
         private static void addColumnTableMapping()
         {
@@ -85,78 +84,10 @@ namespace Young.Data
             }
         }
 
-        private void shareDataBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
-        {
-            foreach (var mo in mos)
-            {
-                if (mo.Item1 is PropertyInfo)
-                {
-                    if (IsSampleMode)
-                    {
-                        if(BindingMode == LoopMode.AutoIncrease)
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute,TypeCounts[me]);
-                        }
-                        else
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute, 0);
-                        }
-                    }
-                    else
-                    {
-                        Func<DataTable> getTableFun = new Func<DataTable>(() => {
-                            DataTable dt = null;
-                            string tableName = "";
-                            if (mo.Item2 is ColumnBindingAttribute)
-                            {
-                                var colAt = mo.Item2 as ColumnBindingAttribute;
-                                colAt.ColName = string.IsNullOrEmpty(colAt.ColName) ? mo.Item1.Name : colAt.ColName;
-                                if (_tableMapping.ContainsKey(colAt.ColName.ToLower()))
-                                {
-                                    tableName = _tableMapping[colAt.ColName.ToLower()];
-                                }
-                            }
-                            else if (mo.Item2 is MultiColumnBindingAttribute)
-                            {
-                                var mulColAt = mo.Item2 as MultiColumnBindingAttribute;
-                                if (_tableMapping.ContainsKey(mulColAt.ColNames.First().ToLower()))
-                                {
-                                    tableName = _tableMapping[mulColAt.ColNames.First().ToLower()];
-                                }
-                            }
-                            if (tableName != "" && Data.Tables.Contains(tableName))
-                            {
-                                dt = Data.Tables[tableName];
-                            }
-                            return dt;
-                        });
-
-                        if(BindingMode == LoopMode.AutoIncrease)
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute, getTableFun, TypeCounts[me]);
-                        }
-                        else
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute, getTableFun, 0);
-                        }
-                        
-                    }
-                    
-                }
-                else if (mo.Item1 is MethodInfo)
-                {
-                    invokeMethod(mo.Item1 as MethodInfo);
-                }
-            }
-
-
-
-        }
-
 
         public void ResetIndex()
         {
-            if(TypeCounts.ContainsKey(me))
+            if (TypeCounts.ContainsKey(me))
             {
                 TypeCounts.Remove(me);
             }
@@ -164,6 +95,16 @@ namespace Young.Data
 
         public void DataBinding()
         {
+
+            if (BindingModeType == null)
+            {
+                _bindingType = GlobalBindingModeType;
+            }
+            else
+            {
+                _bindingType = BindingModeType;
+            }
+
             dba = me.GetCustomAttributes(typeof(DataBindingAttribute), true).FirstOrDefault() as DataBindingAttribute;
 
             if (dba != null)
@@ -176,239 +117,345 @@ namespace Young.Data
                 }
                 else
                 {
-                   TypeCounts.Add(me, 0);
+                    TypeCounts.Add(me, 0);
                 }
 
+                List<Tuple<MemberInfo, OrderAttribute>> reflectionMembers = null;
 
-                var atMiPairs = from m in me.GetMembers()
-                                where (m.MemberType == MemberTypes.Property
-                                || m.MemberType == MemberTypes.Method)
-                                && m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() != null
-                                orderby (m.GetCustomAttributes(typeof(OrderAttribute), true).First() as OrderAttribute).Order
-                                select
-                                new Tuple<MemberInfo, OrderAttribute>(m, m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() as OrderAttribute);
+                IEnumerable<MemberInfo> members = null;
 
-
-                if (Shared)
+                switch (_bindingType.SettingMode)
                 {
-                    shareDataBinding(atMiPairs.ToList());
+                    case SettingType.PropertyOnly:
+                        members = me.GetProperties();
+                        break;
+                    case SettingType.MethodOnly:
+                        members = me.GetMethods();
+                        break;
+                    default:
+                        members = me.GetMembers();
+                        break;
+                }
+
+                reflectionMembers = members
+                    .Where(m => m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() != null)
+                    .Select(m =>
+                    {
+                        return new Tuple<MemberInfo, OrderAttribute>(m, m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() as OrderAttribute);
+                    }).ToList();
+
+
+                if (_bindingType.IsUsingSampleData)
+                {
+                    sampleDataBinding(reflectionMembers);
                 }
                 else
                 {
-                    nonShareDataBinding(atMiPairs.ToList());
-                }
-            }
-        }
-
-
-        private void setProperty(PropertyInfo prop,OrderAttribute attribute,int index)
-        {
-            var propertyType = prop.PropertyType;
-            if (propertyType != typeof(string) && propertyType.IsSubclassOf(typeof(DataDriven)))
-            {
-                if (propertyType.GetConstructor(Type.EmptyTypes) != null)
-                {
-                    dynamic newInstance = Activator.CreateInstance(propertyType);
-                    prop.SetValue(this, newInstance, null);
-                    if (OnSettingProperty != null)
-                        OnSettingProperty(this, new SetPropertyArgs(prop, newInstance, attribute));
-                    newInstance.DataBinding();
-                }
-            }
-            else
-            {
-                if (attribute is ColumnBindingAttribute)
-                {
-                    var sampleData = prop.GetCustomAttributes(typeof(SingleSampleDataAttribute),true).Cast<SingleSampleDataAttribute>().Where(d=>d.Group == index).FirstOrDefault();
-                    if(sampleData!=null)
-                    {
-                        var value = Convert.ChangeType(sampleData.Value, propertyType);
-                        prop.SetValue(this, value, null);
-                        if (OnSettingProperty != null)
-                            OnSettingProperty(this, new SetPropertyArgs(prop, value, attribute));
-                    }
-                   
-                }
-                else if (attribute is MultiColumnBindingAttribute)
-                {
-                    var datas = prop.GetCustomAttributes(typeof(ComplexSampleDataAttribute), true).Cast<ComplexSampleDataAttribute>();
-                    if (datas.Count() > 0)
-                    {
-                        var header = datas.Where(c => c.DataType == SampleDataType.Header && c.Group == index).FirstOrDefault();
-                        if (header != null)
-                        {
-                            DataTable dt = new DataTable();
-                            foreach (var s in header.Content)
-                            {
-                                dt.Columns.Add(new DataColumn(s));
-                            }
-                            var body = datas.Where(c => c.DataType == SampleDataType.Body && c.Group == index);
-                            foreach (var r in body)
-                            {
-                                var row = dt.NewRow();
-                                for (int i = 0; i < r.Content.Count(); i++)
-                                {
-                                    row[i] = r.Content[i];
-                                }
-                                dt.Rows.Add(row);
-                            }
-                            var rows = dt.Select();
-                            prop.SetValue(this, rows, null);
-                            if (OnSettingProperty != null)
-                                OnSettingProperty(this, new SetPropertyArgs(prop, rows, attribute));
-                        }
-                    }
-
+                    tableDataBinding(reflectionMembers);
                 }
 
             }
         }
 
-        private void setProperty(PropertyInfo prop, OrderAttribute attribute, Func<DataTable> GetDataTable,int index)
-        {
-            var propertyType = prop.PropertyType;
-            if (propertyType != typeof(string) && propertyType.IsSubclassOf(typeof(DataDriven)))
-            {
-                if (propertyType.GetConstructor(Type.EmptyTypes) != null)
-                {
-                    dynamic newInstance = Activator.CreateInstance(propertyType);
-                    prop.SetValue(this, newInstance, null);
-                    if (OnSettingProperty != null)
-                        OnSettingProperty(this, new SetPropertyArgs(prop, newInstance,attribute));
-                    newInstance.DataBinding();
-                }
-            }
-            else
-            {
-                DataTable dt = GetDataTable();
-                if (dt != null && dt.Columns.Cast<DataColumn>().Where(c => c.ColumnName.ToLower() == dba.IdColumnName.ToLower()).FirstOrDefault() != null)
-                {
-                    if (attribute is ColumnBindingAttribute)
-                    {
-                        DataRow[] rows = dt.Select(dba.IdColumnName + "=" + CurrentId);
-                        ColumnBindingAttribute colAt = attribute as ColumnBindingAttribute;
-                        colAt.ColName = string.IsNullOrEmpty(colAt.ColName) ? prop.Name : colAt.ColName;
-
-                        if (dt.Columns.Contains(colAt.ColName))
-                        {
-                            DataRow dr = rows[index];
-
-                            if (dr != null && dr[colAt.ColName].ToString() != "")
-                            {
-                                if (colAt.Directory == DataDirectory.Input)
-                                {
-                                    var value = Convert.ChangeType(dr[colAt.ColName], propertyType);
-                                    prop.SetValue(this, value, null);
-                                    if (OnSettingProperty != null)
-                                        OnSettingProperty(this, new SetPropertyArgs(prop, value,attribute));
-                                }
-                                if (colAt.Directory == DataDirectory.Output)
-                                {
-                                    dr[colAt.ColName] = prop.GetValue(this, null);
-                                }
-                            }
-                        }
-                    }
-                    else if (attribute is MultiColumnBindingAttribute)
-                    {
-                        
-                        MultiColumnBindingAttribute mulColAt = attribute as MultiColumnBindingAttribute;
-                        string filter = dba.IdColumnName + "=" + CurrentId + " and " + mulColAt.GroupIdColumnName + index;
-                        DataRow[] rows = dt.Select(filter);
-                        bool isAllColContains = true;
-                        foreach (var col in mulColAt.ColNames)
-                        {
-                            if (!dt.Columns.Contains(col))
-                            {
-                                isAllColContains = false;
-                                break;
-                            }
-                        }
-                        if (isAllColContains)
-                        {
-                            if (rows != null)
-                            {
-                                if (propertyType == typeof(DataRow[]))
-                                {
-                                    prop.SetValue(this, rows, null);
-                                    if (OnSettingProperty != null)
-                                        OnSettingProperty(this, new SetPropertyArgs(prop, rows, attribute));
-                                }
-                                    
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-
-        private void invokeMethod(MethodInfo method)
-        {
-            if (method.GetParameters().Count() == 0)
-            {
-                dynamic returnObj = method.Invoke(this, null);
-                if (returnObj != null && returnObj.GetType().IsSubclassOf(typeof(DataDriven)))
-                {
-                    returnObj.DataBinding();
-                }
-
-            }
-        }
-
-        private void nonShareDataBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
+        private void sampleDataBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
         {
             foreach (var mo in mos)
             {
                 if (mo.Item1 is PropertyInfo)
                 {
-                    if (IsSampleMode)
+                    if (_bindingType.LoopMode == LoopType.Loop)
                     {
-                        if(BindingMode == LoopMode.AutoIncrease)
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute,TypeCounts[me]);
-                        }
-                        else
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute, 0);
-                        }
-                    }  
+                        setProperty(mo.Item1 as PropertyInfo, mo.Item2 as ColumnBindingAttribute, TypeCounts[me]);
+                    }
                     else
                     {
-                        Func<DataTable> getTableMethod = new Func<DataTable>(() => {
-                            DataTable dt = null;
-                            if (Data.Tables.Contains(dba.TableName))
-                            {
-                                dt = Data.Tables[dba.TableName];
-                            }
-                            return dt;
-                        });
-
-                        if(BindingMode == LoopMode.AutoIncrease)
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute, getTableMethod, TypeCounts[me]);
-                        }
-                        else
-                        {
-                            setProperty(mo.Item1 as PropertyInfo, mo.Item2 as OrderAttribute,getTableMethod,0);
-                        }
-                       
-                           
+                        setProperty(mo.Item1 as PropertyInfo, mo.Item2 as ColumnBindingAttribute, 0);
                     }
-                        
+                }
+                else if (mo.Item1 is MethodInfo)
+                {
+                    invokeMethod(mo.Item1 as MethodInfo);
+                }
+            }
+        }
+
+        private void tableDataBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
+        {
+            foreach (var mo in mos)
+            {
+                if (mo.Item1 is PropertyInfo)
+                {
+                    PropertyInfo prop = mo.Item1 as PropertyInfo;
+                    ColumnBindingAttribute colAttr = mo.Item2 as ColumnBindingAttribute;
+                    resetColumnName(mo.Item1, colAttr);
+                    bool isSimpleProp = isSimpleField(prop);
+
+                    Func<bool> isSimpleCondition = new Func<bool>(() => isSimpleProp);
+                    DataRow[] data = null;
+                    if (_bindingType.DataMode == DataType.FromShareTable)
+                    {
+                        data = getSharedData(colAttr, isSimpleCondition);
+                    }
+                    else
+                    {
+                        data = getPrivateData(colAttr, isSimpleCondition);
+                    }
+
+                    int index = _bindingType.LoopMode == LoopType.Loop ? TypeCounts[me] : 0;
+
+
+                    if (isSimpleProp)
+                    {
+                        if (colAttr.Directory == DataDirectory.Input)
+                            setSingleProperty(prop, colAttr, data, index);
+                        else
+                            getSingleProperty(prop, colAttr, data, index);
+                    }
+                    else
+                    {
+                        if (colAttr.Directory == DataDirectory.Input)
+                            setComplexProperty(prop, colAttr, data, index);
+                    }
+
+
+
+
                 }
                 else if (mo.Item1 is MethodInfo)
                 {
                     invokeMethod(mo.Item1 as MethodInfo);
                 }
 
+
             }
+
         }
 
 
+        private DataRow[] getSharedData(ColumnBindingAttribute attribute, Func<bool> isSimpleCondition)
+        {
+            DataTable dt = null;
+            string tableName = "";
+
+            string columnName = attribute.ColNames.Last();
+
+            if (_tableMapping.ContainsKey(columnName.ToLower()))
+            {
+                tableName = _tableMapping[columnName.ToLower()];
+            }
+            if (tableName != "" && Data.Tables.Contains(tableName))
+            {
+                dt = Data.Tables[tableName];
+            }
+            if (dt != null)
+            {
+                string filter = null;
+                filter = getTableFilter(attribute, isSimpleCondition);
+                if (filter != null && isColumnsInclude(dt, attribute))
+                {
+                    return dt.Select(filter);
+                }
+            }
+            return null;
+        }
+
+        private DataRow[] getPrivateData(ColumnBindingAttribute attribute, Func<bool> isSimpleCondition)
+        {
+            DataTable dt = null;
+            if (Data.Tables.Contains(dba.TableName))
+            {
+                dt = Data.Tables[dba.TableName];
+            }
+
+            if (dt != null)
+            {
+                string filter = null;
+                filter = getTableFilter(attribute, isSimpleCondition);
+                if (filter != null && isColumnsInclude(dt, attribute))
+                {
+                    return dt.Select(filter);
+                }
+            }
+
+            return null;
+        }
+
+        private bool isSimpleField(PropertyInfo prop)
+        {
+            if (prop.PropertyType.IsPrimitive || prop.PropertyType == typeof(string))
+                return true;
+            return false;
+        }
+
+        private void resetColumnName(MemberInfo prop, ColumnBindingAttribute attr)
+        {
+            if (attr.ColNames == null || attr.ColNames.Count() == 0)
+            {
+                attr.ColNames = new string[] { prop.Name };
+            }
+
+        }
+
+        private void getSingleProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
+        {
+
+        }
+
+        private void setSingleProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
+        {
+            object value = null;
+            if (rows != null && rows.Count() > 0)
+            {
+                string colName = attribute.ColNames.First();
+
+                //May Throw Error
+                DataRow dr = rows[index];
+
+                if (dr[colName] != null && dr[colName].ToString() != "")
+                {
+                    value = getConvertValue(attribute, dr[colName], prop.PropertyType);
+                }
+            }
+            setValue(prop, value, attribute);
+        }
+
+        private void setComplexProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
+        {
+            object value = null;
+            value = getConvertValue(attribute, rows, prop.PropertyType);
+            setValue(prop, value, attribute);
+        }
+
+        private void setValue(PropertyInfo prop, object value, OrderAttribute attribute)
+        {
+            if (value != null)
+            {
+                prop.SetValue(this, value, null);
+                if (OnSettingProperty != null)
+                    OnSettingProperty(this, new SetPropertyArgs(prop, value, attribute));
+                runRecusion(value);
+            }
+        }
+
+        private void setProperty(PropertyInfo prop, ColumnBindingAttribute attribute, int index)
+        {
+            var propertyType = prop.PropertyType;
+            object value = null;
+
+            var singleData = prop.GetCustomAttributes(typeof(SingleSampleDataAttribute), true).Cast<SingleSampleDataAttribute>().Where(d => d.Group == index).FirstOrDefault();
+            if (singleData != null)
+            {
+                value = getConvertValue(attribute, singleData, propertyType);
+            }
+            else
+            {
+                var datas = prop.GetCustomAttributes(typeof(ComplexSampleDataAttribute), true).Cast<ComplexSampleDataAttribute>();
+                if (datas.Count() > 0)
+                {
+                    var header = datas.Where(c => c.DataType == SampleDataType.Header && c.Group == index).FirstOrDefault();
+                    if (header != null)
+                    {
+                        DataTable dt = new DataTable();
+                        foreach (var s in header.Content)
+                        {
+                            dt.Columns.Add(new DataColumn(s));
+                        }
+                        var body = datas.Where(c => c.DataType == SampleDataType.Body && c.Group == index);
+                        foreach (var r in body)
+                        {
+                            var row = dt.NewRow();
+                            for (int i = 0; i < r.Content.Count(); i++)
+                            {
+                                row[i] = r.Content[i];
+                            }
+                            dt.Rows.Add(row);
+                        }
+                        var rows = dt.Select();
+                        value = getConvertValue(attribute, rows, propertyType);
+                    }
+                }
+            }
+
+            setValue(prop, value, attribute);
+        }
+
+
+
+        private void invokeMethod(MethodInfo method)
+        {
+            if (method.GetParameters().Count() == 0)
+            {
+                dynamic returnObj = method.Invoke(this, null);
+                if (method.ReturnType != typeof(void))
+                {
+                    runRecusion(returnObj);
+                }
+
+            }
+        }
+
+        private string getTableFilter(ColumnBindingAttribute attribute, Func<bool> isSimplecondition)
+        {
+            string filter = null;
+            if (attribute != null)
+            {
+                filter = dba.IdColumnName + "=" + CurrentId;
+                if (!isSimplecondition())
+                {
+                    if (_bindingType.LoopMode == LoopType.Loop)
+                    {
+                        filter += (" and " + attribute.GroupIdColumnName + "=" + TypeCounts[me].ToString());
+                    }
+                }
+
+
+            }
+            return filter;
+        }
+
+        private bool isColumnsInclude(DataTable dt, ColumnBindingAttribute attribute)
+        {
+            bool isAllContain = true;
+
+            foreach (var s in attribute.ColNames)
+            {
+                if (dt.Columns.Cast<DataColumn>().Where(c => c.ColumnName.ToLower().Contains(s.ToLower())).FirstOrDefault() == null)
+                {
+                    isAllContain = false;
+                    break;
+                }
+            }
+            return isAllContain;
+        }
+
+        private object getConvertValue(ColumnBindingAttribute colAttr, object SourceValue, Type targetType)
+        {
+            object value = null;
+            if (colAttr.MethodName != null && colAttr.Target != null)
+            {
+                var customDelegate = Delegate.CreateDelegate(typeof(ColumnBindingConvert), colAttr.Target, colAttr.MethodName) as ColumnBindingConvert;
+                value = customDelegate.Invoke(SourceValue);
+            }
+            else
+            {
+                value = Convert.ChangeType(SourceValue, targetType);
+            }
+            return value;
+        }
+
+        private void runRecusion(object returnObj)
+        {
+            if (_bindingType.RecusionMode == RecusionType.Recusion)
+            {
+                if (returnObj != null && returnObj.GetType().IsSubclassOf(typeof(DataDriven)))
+                {
+                    (returnObj as DataDriven).DataBinding();
+                }
+            }
+        }
     }
 
-    public class SetPropertyArgs:EventArgs
+    public class SetPropertyArgs : EventArgs
     {
         public PropertyInfo Property { get; set; }
 
@@ -416,7 +463,7 @@ namespace Young.Data
 
         public OrderAttribute Attribute { get; set; }
 
-        public SetPropertyArgs(PropertyInfo Prop,Object value,OrderAttribute Attribute)
+        public SetPropertyArgs(PropertyInfo Prop, Object value, OrderAttribute Attribute)
         {
             this.Property = Prop;
             this.Value = value;

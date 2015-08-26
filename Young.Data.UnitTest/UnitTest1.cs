@@ -11,6 +11,7 @@ using System.Linq;
 using Young.Data.Attributes;
 using SAPAutomation;
 using SAPFEWSELib;
+using System.Reflection;
 
 namespace Young.Data.UnitTest
 {
@@ -83,6 +84,7 @@ namespace Young.Data.UnitTest
         {
             DataDriven.Data = ExcelHelper.Current.Open(@"D:\test1.xlsx").ReadAll();
             DataDriven.CurrentId = 1;
+            DataDriven.GlobalBindingModeType.RecusionMode = RecusionType.Recusion;
             DataDriven.NonSharedTables = new List<string>();
             TestC t = new TestC();
             
@@ -91,6 +93,17 @@ namespace Young.Data.UnitTest
             var msg = TestC.Msg;
         }
 
+        public delegate T GetResult<T>(T a, T b);
+
+        [TestMethod]
+        public void DelegateTest()
+        {
+            MethodInfo mi = typeof(TestDelegate).GetMethod(nameof(TestDelegate.Add));
+
+            //Delegate.CreateDelegate()
+            var method = Delegate.CreateDelegate(typeof(GetResult<string>), mi);
+            //string a = method.Method.Invoke()
+        }
 
         [TestMethod]
         public void SAPCompTest()
@@ -115,15 +128,21 @@ namespace Young.Data.UnitTest
             }
         }
 
+        [TestMethod]
+        public void RegexTest()
+        {
+            var str = "Document 38643036 posted";
+            var number = Regex.Replace(str,@"\D+","");
+        }
+
        
     }
 
     
-
     public class TestBase:DataDriven
     {
         public static string Msg = "";
-        public TestBase(bool isShare):base(isShare)
+        public TestBase(bool isShare)
         {
             OnSettingProperty += (o, e) =>
             {
@@ -134,6 +153,17 @@ namespace Young.Data.UnitTest
 
 
     }
+
+
+    public static class TestDelegate
+    {
+        public static string Add(string a,string b)
+        {
+            return a;
+        }
+        
+    }
+
 
     [DataBinding]
     public class TestA:TestBase
@@ -156,12 +186,17 @@ namespace Young.Data.UnitTest
     [DataBinding("1")]
     public class TestC:TestBase
     {
+        public static object Create(object obj)
+        {
+            return new TestA();
+        }
+
         public TestC():base(false)
         {
 
         }
 
-        [ColumnBinding]
+        [ColumnBinding(new string[] { },nameof(Create),typeof(TestC),"GroupId")]
         public TestA TestA { get; set; }
 
         [ColumnBinding]
