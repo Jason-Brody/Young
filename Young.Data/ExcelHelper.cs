@@ -345,6 +345,7 @@ namespace Young.Data
         public void Write(DataTable dt)
         {
             var sheets = _wbPart.Workbook.Descendants<Sheet>();
+            int sheetCount = sheets.Count();
             var sheet = sheets.Where(c => c.Name.Value.ToLower() == dt.TableName.ToLower()).FirstOrDefault();
             WorksheetPart wsPart = null;
             if(sheet==null)
@@ -355,7 +356,7 @@ namespace Young.Data
                 {
                     Id = _wbPart.GetIdOfPart(wsPart),
                     Name = dt.TableName,
-                    SheetId = 1
+                    SheetId = (uint)(sheetCount + 1)
                 };
                 _wbPart.Workbook.GetFirstChild<Sheets>().Append(sheet);
             }

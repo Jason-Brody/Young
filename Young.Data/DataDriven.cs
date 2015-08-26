@@ -142,7 +142,7 @@ namespace Young.Data
                     .Select(m =>
                     {
                         return new Tuple<MemberInfo, OrderAttribute>(m, m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() as OrderAttribute);
-                    }).ToList();
+                    }).OrderBy(m=>m.Item2.Order).ToList();
 
 
                 if (_bindingType.IsUsingSampleData)
@@ -216,17 +216,11 @@ namespace Young.Data
                         if (colAttr.Directory == DataDirectory.Input)
                             setComplexProperty(prop, colAttr, data, index);
                     }
-
-
-
-
                 }
                 else if (mo.Item1 is MethodInfo)
                 {
                     invokeMethod(mo.Item1 as MethodInfo);
                 }
-
-
             }
 
         }
@@ -298,7 +292,10 @@ namespace Young.Data
 
         private void getSingleProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
         {
+            string colName = attribute.ColNames.First();
+            DataRow dr = rows[index];
 
+            dr[colName] = prop.GetValue(this, null);
         }
 
         private void setSingleProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
@@ -345,7 +342,7 @@ namespace Young.Data
             var singleData = prop.GetCustomAttributes(typeof(SingleSampleDataAttribute), true).Cast<SingleSampleDataAttribute>().Where(d => d.Group == index).FirstOrDefault();
             if (singleData != null)
             {
-                value = getConvertValue(attribute, singleData, propertyType);
+                value = getConvertValue(attribute, singleData.Value, propertyType);
             }
             else
             {
@@ -378,8 +375,6 @@ namespace Young.Data
 
             setValue(prop, value, attribute);
         }
-
-
 
         private void invokeMethod(MethodInfo method)
         {

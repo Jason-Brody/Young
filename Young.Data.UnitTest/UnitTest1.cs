@@ -12,6 +12,7 @@ using Young.Data.Attributes;
 using SAPAutomation;
 using SAPFEWSELib;
 using System.Reflection;
+using SAPGuiAutomationLib;
 
 namespace Young.Data.UnitTest
 {
@@ -108,7 +109,16 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void SAPCompTest()
         {
+            //SAPAutomationHelper.Current.SetSAPApiAssembly();
+            //var asm = SAPAutomationHelper.Current.SAPGuiApiAssembly;
+            //var tps = GetTypeByMethod(asm, "PressContextButton");
+            
             SAPTestHelper.Current.SetSession();
+
+            var guiToolBar = SAPTestHelper.Current.MainWindow.FindByName<GuiGOSShell>("shellcont[1]").FindByName<GuiToolbarControl>("shell");
+
+            var test = SAPTestHelper.Current.GetElementById("wnd[0]/titl/shellcont[1]/shell");
+            var dp = test.Type;
 
             var control = SAPTestHelper.Current.MainWindow.FindByName<GuiContainerShell>("shellcont[1]").FindByName<GuiTextedit>("shell");
 
@@ -133,6 +143,21 @@ namespace Young.Data.UnitTest
         {
             var str = "Document 38643036 posted";
             var number = Regex.Replace(str,@"\D+","");
+        }
+
+
+        public static IEnumerable<Type> GetTypeByMethod(Assembly asm,string MethodName)
+        {
+            foreach(var t in asm.GetTypes())
+            {
+                foreach(var m in t.GetMethods().Where(mi=>mi.IsSpecialName == false))
+                {
+                    if(m.Name.IndexOf(MethodName)>=0)
+                    {
+                        yield return t;
+                    }
+                }
+            }
         }
 
        
