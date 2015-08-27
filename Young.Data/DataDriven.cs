@@ -12,6 +12,7 @@ namespace Young.Data
 
     public delegate T Convert<T>(DataRow[] rows);
 
+    [DataBinding]
     public class DataDriven
     {
         public event OnSettingPropertyHander OnSettingProperty;

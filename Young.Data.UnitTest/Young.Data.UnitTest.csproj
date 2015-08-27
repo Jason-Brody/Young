@@ -44,10 +44,10 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="SAPAutomation">
-      <HintPath>..\..\SAPGuiAutomationLib\SAPAutomation\bin\Debug\SAPAutomation.dll</HintPath>
+      <HintPath>..\..\..\..\GitHub\SAPGuiAutomationLib\SAPAutomation\bin\Debug\SAPAutomation.dll</HintPath>
     </Reference>
     <Reference Include="SAPGuiAutomationLib">
-      <HintPath>..\..\SAPGuiAutomationLib\SAPGuiAutomationLib\bin\Debug\SAPGuiAutomationLib.dll</HintPath>
+      <HintPath>..\..\..\..\GitHub\SAPGuiAutomationLib\SAPGuiAutomationLib\bin\Debug\SAPGuiAutomationLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
