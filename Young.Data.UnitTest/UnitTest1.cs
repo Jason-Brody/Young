@@ -13,6 +13,7 @@ using SAPAutomation;
 using SAPFEWSELib;
 using System.Reflection;
 using SAPGuiAutomationLib;
+using System.IO;
 
 namespace Young.Data.UnitTest
 {
@@ -111,11 +112,27 @@ namespace Young.Data.UnitTest
         {
             //SAPAutomationHelper.Current.SetSAPApiAssembly();
             //var asm = SAPAutomationHelper.Current.SAPGuiApiAssembly;
-            //var tps = GetTypeByMethod(asm, "PressContextButton");
+           // var tps = GetTypeByMethod(asm, "PressContextButton");
             
             SAPTestHelper.Current.SetSession();
-
+            var menu = SAPTestHelper.Current.MainWindow.FindByName<GuiContainerShell>("shellcont").FindByName<GuiGridView>("shell").CurrentContextMenu;
+            string temp;
+            foreach(GuiContextMenu s in menu.Children)
+            {
+                
+                temp = s.Text;
+            }
             var guiToolBar = SAPTestHelper.Current.MainWindow.FindByName<GuiGOSShell>("shellcont[1]").FindByName<GuiToolbarControl>("shell");
+            
+            SAPTestHelper.Current.MainWindow.ShowMessageBox("Warning", "Hello", 0, 0);
+            string script = "";
+            using (StreamReader sr = new StreamReader(new FileStream(@"C:\Users\Young\AppData\Roaming\SAP\SAP GUI\Scripts\Script4.vbs",FileMode.Open)))
+            {
+                script = sr.ReadToEnd();
+            }
+            SAPTestHelper.Current.SAPGuiSession.RunScriptControl(script, 1);
+
+            //var guiToolBar = SAPTestHelper.Current.MainWindow.FindByName<GuiGOSShell>("shellcont[1]").FindByName<GuiToolbarControl>("shell");
 
             var test = SAPTestHelper.Current.GetElementById("wnd[0]/titl/shellcont[1]/shell");
             var dp = test.Type;
@@ -137,6 +154,8 @@ namespace Young.Data.UnitTest
                 }
             }
         }
+
+        
 
         [TestMethod]
         public void RegexTest()
