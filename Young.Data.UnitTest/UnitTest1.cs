@@ -14,6 +14,8 @@ using SAPFEWSELib;
 using System.Reflection;
 using SAPGuiAutomationLib;
 using System.IO;
+using Ninject;
+using Ninject.Parameters;
 
 namespace Young.Data.UnitTest
 {
@@ -182,8 +184,18 @@ namespace Young.Data.UnitTest
        
     }
 
-    
-    public class TestBase:DataDriven
+    public class TestNinja
+    {
+        public void Test()
+        {
+            IKernel kernel = new StandardKernel();
+           
+        }
+
+    }
+
+
+    public class TestBase:DataDriven,ITest
     {
         public static string Msg = "";
         public TestBase(bool isShare)
@@ -198,6 +210,10 @@ namespace Young.Data.UnitTest
 
     }
 
+    public interface ITest
+    { }
+
+    
 
     public static class TestDelegate
     {

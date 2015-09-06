@@ -55,7 +55,9 @@
     <Compile Include="Attributes\OrderAttribute.cs" />
     <Compile Include="Attributes\DataGroupAttribute.cs" />
     <Compile Include="Attributes\SingleSampleDataAttribute.cs" />
+    <Compile Include="DataBindingConfig.cs" />
     <Compile Include="DataBindingFactory.cs" />
+    <Compile Include="DataCenter.cs" />
     <Compile Include="DataDirectory.cs" />
     <Compile Include="DataDriven.cs" />
     <Compile Include="DataTableEntity.cs" />
