@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Young.Data</RootNamespace>
     <AssemblyName>Young.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -56,8 +56,7 @@
     <Compile Include="Attributes\DataGroupAttribute.cs" />
     <Compile Include="Attributes\SingleSampleDataAttribute.cs" />
     <Compile Include="DataBindingConfig.cs" />
-    <Compile Include="DataBindingFactory.cs" />
-    <Compile Include="DataCenter.cs" />
+    <Compile Include="DataEngine.cs" />
     <Compile Include="DataDirectory.cs" />
     <Compile Include="DataDriven.cs" />
     <Compile Include="DataTableEntity.cs" />
@@ -67,6 +66,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Range.cs" />
     <Compile Include="BindingMode.cs" />
+    <Compile Include="SetPropertyArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Source\" />

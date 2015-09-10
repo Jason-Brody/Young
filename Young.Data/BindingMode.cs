@@ -33,8 +33,8 @@ namespace Young.Data
 
     public enum RecusionType
     {
-        NoRecursion = 0,
-        Recusion =1,
+        Recusion = 0,
+        NoRecursion = 1,
     }
 
     public enum SettingType

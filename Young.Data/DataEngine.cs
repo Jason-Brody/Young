@@ -8,172 +8,231 @@ using Young.Data.Attributes;
 
 namespace Young.Data
 {
-    public delegate void OnPropertyChangeHander(object sender, SetPropertyArgs e);
-
-    //public delegate T Convert<T>(DataRow[] rows);
-
-    [DataBinding]
-    public class DataDriven
+    public class DataEngine
     {
         public event OnPropertyChangeHander OnSettingProperty;
+
         public event OnPropertyChangeHander OnGettingProperty;
 
-        private static List<string> _privateTables;
+        public Dictionary<string, DataBindingConfig> ClassConfigs;
 
-        public static bool IsUsingSampleData { get; set; }
+        private Stack<Tuple<object,Type,bool,DataBindingAttribute>> _objStatus;
 
-        public DataDriven()
+        private DataSet _ds;
+
+        public DataSet Data
         {
-            me = this.GetType();
+            get { return _ds; }
         }
 
-        protected Type me;
+        public static BindingMode GlobalBindingMode { get; set; }
 
-        private DataBindingAttribute dba;
+        private BindingMode _bindingMode { get; set; }
 
-        private static DataSet _ds;
+        private Queue<object> _objs;
 
-        public static DataSet Data { get { return _ds; } }
+        public Queue<object> Objects { get { return _objs; } }
 
-        public static void SetData(DataSet ds)
+        public int CurrentId { get; set; }
+
+        private DataBindingAttribute _tableAttr;
+
+        private bool _isFromConfig;
+
+        private Type me;
+
+        public bool IsUsingSampleData { get; set; }
+
+        protected Dictionary<Type, int> TypeCounts = new Dictionary<Type, int>();
+
+        public DataEngine()
         {
-            _ds = ds;
-            addColumnTableMapping();
+            _columnTableMappings = new List<Dictionary<string, string>>();
+            _objStatus = new Stack<Tuple<object, Type, bool, DataBindingAttribute>>();
+            _objs = new Queue<object>();
         }
 
-        public static int CurrentId { get; set; }
+        private List<Dictionary<string, string>> _columnTableMappings;
 
-        protected static Dictionary<Type, int> TypeCounts = new Dictionary<Type, int>();
-
-
-        private static Dictionary<string, string> _tableMapping;
-
-        private static void addColumnTableMapping()
+        public void SetData(DataSet Datas)
         {
-            _tableMapping = new Dictionary<string, string>();
-            if (_privateTables == null)
-                _privateTables = new List<string>();
-            else
-                _privateTables.ForEach(s => s = s.ToLower());
+            this._ds = Datas;
+            _columnTableMappings = new List<Dictionary<string, string>>();
+            setColumnMappings();
+        }
 
-            if (Data != null)
+        private void setColumnMappings()
+        {
+            foreach (DataTable dt in _ds.Tables)
             {
-                foreach (DataTable table in Data.Tables)
+                Dictionary<string, string> tableColumnMapping = new Dictionary<string, string>();
+                foreach (DataColumn dc in dt.Columns)
                 {
-                    if (!_privateTables.Contains(table.TableName.ToLower()))
-                    {
-                        foreach (DataColumn dc in table.Columns)
-                        {
-                            if (!_tableMapping.ContainsKey(dc.ColumnName.ToLower()))
-                                _tableMapping.Add(dc.ColumnName.ToLower(), table.TableName);
-                        }
-                    }
+                    tableColumnMapping.Add(dc.ColumnName.ToLower(), dt.TableName);
                 }
+                _columnTableMappings.Add(tableColumnMapping);
             }
         }
 
-
-        public void ResetIndex()
+        public T Create<T>() where T : class, new()
         {
+            me = typeof(T);
+            if (isMatchBinding(typeof(T)))
+            {
+                T obj = new T();
+                dataBinding(obj);
+                return obj;
+            }
+            return null;
+        }
+
+        public void Update(object t)
+        {
+            me = t.GetType();
+            if (isMatchBinding(t.GetType()))
+                dataBinding(t);
+        }
+
+        public object Create(Type t)
+        {
+            me = t;
+            if (isMatchBinding(t))
+            {
+                object obj = Activator.CreateInstance(t);
+                dataBinding(obj);
+                return obj;
+            }
+            return null;
+
+        }
+
+        public object Create(string TypeName)
+        {
+            Type t = Type.GetType(TypeName);
+            return Create(t);
+        }
+
+        private void dataBinding(object instance)
+        {
+            _tempInstance = instance;
+
+            _objs.Enqueue(instance);
+           
+
             if (TypeCounts.ContainsKey(me))
             {
-                TypeCounts.Remove(me);
+                TypeCounts[me] += 1;
+            }
+            else
+            {
+                TypeCounts.Add(me, 0);
+            }
+
+            if (_isFromConfig)
+            {
+                bindingFromConfigs(ClassConfigs[me.FullName]);
+            }
+            else
+            {
+                bindingFromCode();
             }
         }
 
-        public void DataBinding(Tuple<string,BindingType> BindingMember)
-        {
-            dba = me.GetCustomAttributes(typeof(DataBindingAttribute), true).FirstOrDefault() as DataBindingAttribute;
-            if(dba != null)
-            {
-                dba.TableName = string.IsNullOrEmpty(dba.TableName) ? me.Name : dba.TableName;
-                MemberInfo mi = null;
-                switch(BindingMember.Item2)
-                {
-                    case BindingType.Method:
-                        mi = me.GetMethod(BindingMember.Item1);
-                        break;
-                    default:
-                        mi = me.GetProperty(BindingMember.Item1);
-                        break;
-                }
-                if(mi != null)
-                {
-                    OrderAttribute oa = mi.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() as OrderAttribute;
-                    if(oa!=null)
-                    {
-                        List<Tuple<MemberInfo, OrderAttribute>> memberList = new List<Tuple<MemberInfo, OrderAttribute>>()
-                        {
-                            new Tuple<MemberInfo, OrderAttribute>(mi, oa)
-                        };
+        
 
-                        if (IsUsingSampleData)
-                        {
-                            sampleDataBinding(memberList);
-                        }
-                        else
-                        {
-                            tableDataBinding(memberList);
-                        }
-                    }
-                    
-                }
+        private object _tempInstance;
+
+        private bool isMatchBinding(Type t)
+        {
+            if (ClassConfigs != null && ClassConfigs.ContainsKey(me.FullName))
+            {
+                _isFromConfig = true;
+                return true;
+            }
+            _tableAttr = me.GetCustomAttribute<DataBindingAttribute>(true);
+            if (_tableAttr != null)
+            {
+                setBindingMode(_tableAttr);
+                _isFromConfig = false;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void setBindingMode(DataBindingAttribute tableAttr)
+        {
+            if(GlobalBindingMode == null)
+            {
+                _bindingMode = new BindingMode() {
+                    DataMode = tableAttr.DataMode,
+                    LoopMode = tableAttr.LoopMode,
+                    RecusionMode = tableAttr.RecusionMode,
+                    SettingMode = tableAttr.SettingMode
+                };
+            }
+            else
+            {
+                _bindingMode = GlobalBindingMode;
             }
         }
 
-        public void DataBinding()
+        private void bindingFromCode()
         {
+            _tableAttr.TableName = string.IsNullOrEmpty(_tableAttr.TableName) ? me.Name : _tableAttr.TableName;
+            List<Tuple<MemberInfo, OrderAttribute>> reflectionMembers = null;
 
-            dba = me.GetCustomAttributes(typeof(DataBindingAttribute), true).FirstOrDefault() as DataBindingAttribute;
+            IEnumerable<MemberInfo> members = null;
 
-            if (dba != null)
+            switch (_bindingMode.SettingMode)
             {
-                dba.TableName = string.IsNullOrEmpty(dba.TableName) ? me.Name : dba.TableName;
-
-                if (TypeCounts.ContainsKey(me))
-                {
-                    TypeCounts[me] += 1;
-                }
-                else
-                {
-                    TypeCounts.Add(me, 0);
-                }
-
-                List<Tuple<MemberInfo, OrderAttribute>> reflectionMembers = null;
-
-                IEnumerable<MemberInfo> members = null;
-
-                switch (dba.SettingMode)
-                {
-                    case SettingType.PropertyOnly:
-                        members = me.GetProperties();
-                        break;
-                    case SettingType.MethodOnly:
-                        members = me.GetMethods();
-                        break;
-                    default:
-                        members = me.GetMembers();
-                        break;
-                }
-
-                reflectionMembers = members
-                    .Where(m => m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() != null)
-                    .Select(m =>
-                    {
-                        return new Tuple<MemberInfo, OrderAttribute>(m, m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() as OrderAttribute);
-                    }).OrderBy(m=>m.Item2.Order).ToList();
-
-
-                if (IsUsingSampleData)
-                {
-                    sampleDataBinding(reflectionMembers);
-                }
-                else
-                {
-                    tableDataBinding(reflectionMembers);
-                }
-
+                case SettingType.PropertyOnly:
+                    members = me.GetProperties();
+                    break;
+                case SettingType.MethodOnly:
+                    members = me.GetMethods();
+                    break;
+                default:
+                    members = me.GetMembers();
+                    break;
             }
+
+            reflectionMembers = members
+                .Where(m => m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() != null)
+                .Select(m =>
+                {
+                    return new Tuple<MemberInfo, OrderAttribute>(m, m.GetCustomAttributes(typeof(OrderAttribute), true).FirstOrDefault() as OrderAttribute);
+                }).OrderBy(m => m.Item2.Order).ToList();
+
+            if (IsUsingSampleData)
+            {
+                sampleDataBinding(reflectionMembers);
+            }
+            else
+            {
+                tableDataBinding(reflectionMembers);
+            }
+
+        }
+
+        private void bindingFromConfigs(DataBindingConfig config)
+        {
+            _tableAttr = config.DataBinding;
+            setBindingMode(_tableAttr);
+            _tableAttr.TableName = string.IsNullOrEmpty(_tableAttr.TableName) ? me.Name : _tableAttr.TableName;
+
+            List<Tuple<MemberInfo, OrderAttribute>> reflectionMembers = config.GetInfoes();
+
+            if (IsUsingSampleData)
+            {
+                sampleDataBinding(reflectionMembers);
+            }
+            else
+            {
+                tableDataBinding(reflectionMembers);
+            }
+
+
         }
 
         private void sampleDataBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
@@ -182,7 +241,7 @@ namespace Young.Data
             {
                 if (mo.Item1 is PropertyInfo)
                 {
-                    if (dba.LoopMode == LoopType.Loop)
+                    if (_bindingMode.LoopMode == LoopType.Loop)
                     {
                         setProperty(mo.Item1 as PropertyInfo, mo.Item2 as ColumnBindingAttribute, TypeCounts[me]);
                     }
@@ -209,9 +268,10 @@ namespace Young.Data
                     resetColumnName(mo.Item1, colAttr);
                     bool isSimpleProp = isSimpleField(prop);
 
-                    
                     DataRow[] data = null;
-                    if (dba.DataMode == DataType.FromShareTable)
+
+
+                    if (_bindingMode.DataMode == DataType.FromShareTable)
                     {
                         data = getSharedData(colAttr, isSimpleProp);
                     }
@@ -220,7 +280,7 @@ namespace Young.Data
                         data = getPrivateData(colAttr, isSimpleProp);
                     }
 
-                    int index = dba.LoopMode == LoopType.Loop ? TypeCounts[me] : 0;
+                    int index = _bindingMode.LoopMode == LoopType.Loop ? TypeCounts[me] : 0;
 
 
                     if (isSimpleProp)
@@ -251,13 +311,16 @@ namespace Young.Data
 
             string columnName = attribute.ColNames.Last();
 
-            if (_tableMapping.ContainsKey(columnName.ToLower()))
+            foreach (var dic in _columnTableMappings)
             {
-                tableName = _tableMapping[columnName.ToLower()];
+                if (dic.ContainsKey(columnName.ToLower()))
+                {
+                    tableName = dic[columnName.ToLower()];
+                }
             }
-            if (tableName != "" && Data.Tables.Contains(tableName))
+            if (tableName != "" && _ds.Tables.Contains(tableName))
             {
-                dt = Data.Tables[tableName];
+                dt = _ds.Tables[tableName];
             }
             if (dt != null)
             {
@@ -274,9 +337,9 @@ namespace Young.Data
         private DataRow[] getPrivateData(ColumnBindingAttribute attribute, bool isSimpleCondition)
         {
             DataTable dt = null;
-            if (Data.Tables.Contains(dba.TableName))
+            if (_ds.Tables.Contains(_tableAttr.TableName))
             {
-                dt = Data.Tables[dba.TableName];
+                dt = _ds.Tables[_tableAttr.TableName];
             }
 
             if (dt != null)
@@ -313,7 +376,9 @@ namespace Young.Data
             string colName = attribute.ColNames.First();
             DataRow dr = rows[index];
 
-            dr[colName] = prop.GetValue(this, null);
+            dr[colName] = prop.GetValue(_tempInstance, null);
+            if(OnGettingProperty != null)
+                OnGettingProperty(_tempInstance, new SetPropertyArgs(prop, dr[colName], attribute));
         }
 
         private void setSingleProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
@@ -345,12 +410,14 @@ namespace Young.Data
         {
             if (value != null)
             {
-                prop.SetValue(this, value, null);
+                prop.SetValue(_tempInstance, value, null);
                 if (OnSettingProperty != null)
-                    OnSettingProperty(this, new SetPropertyArgs(prop, value, attribute));
+                    OnSettingProperty(_tempInstance, new SetPropertyArgs(prop, value, attribute));
                 runRecusion(value);
             }
         }
+
+        
 
         private void setProperty(PropertyInfo prop, ColumnBindingAttribute attribute, int index)
         {
@@ -398,7 +465,7 @@ namespace Young.Data
         {
             if (method.GetParameters().Count() == 0)
             {
-                dynamic returnObj = method.Invoke(this, null);
+                dynamic returnObj = method.Invoke(_tempInstance, null);
                 if (method.ReturnType != typeof(void))
                 {
                     runRecusion(returnObj);
@@ -412,10 +479,10 @@ namespace Young.Data
             string filter = null;
             if (attribute != null)
             {
-                filter = dba.IdColumnName + "=" + CurrentId;
+                filter = _tableAttr.IdColumnName + "=" + CurrentId;
                 if (!isSimplecondition)
                 {
-                    if (dba.LoopMode == LoopType.Loop)
+                    if (_bindingMode.LoopMode == LoopType.Loop)
                     {
                         filter += (" and " + attribute.GroupIdColumnName + "=" + TypeCounts[me].ToString());
                     }
@@ -458,17 +525,28 @@ namespace Young.Data
 
         private void runRecusion(object returnObj)
         {
-            if (dba.RecusionMode == RecusionType.Recusion)
+            if (_bindingMode.RecusionMode == RecusionType.Recusion)
             {
-                if (returnObj != null && returnObj.GetType().IsSubclassOf(typeof(DataDriven)))
+
+                if (returnObj != null)
                 {
-                    (returnObj as DataDriven).DataBinding();
+                    Type returnType = returnObj.GetType();
+                    if (returnType.IsClass && returnType != typeof(string))
+                    {
+                        Tuple<object, Type, bool, DataBindingAttribute> status 
+                            = new Tuple<object, Type, bool, DataBindingAttribute>(
+                                _tempInstance,me,_isFromConfig,_tableAttr);
+                        _objStatus.Push(status);
+                        Update(returnObj);
+                        status = _objStatus.Pop();
+                        _tempInstance = status.Item1;
+                        me = status.Item2;
+                        _isFromConfig = status.Item3;
+                        _tableAttr = status.Item4;
+                    }
+                        
                 }
             }
         }
     }
-
-    
-
-
 }

@@ -25,5 +25,13 @@ namespace Young.Data.Attributes
         }
 
         public string IdColumnName { get; set; }
+
+        public LoopType LoopMode { get; set; }
+
+        public RecusionType RecusionMode { get; set; }
+
+        public SettingType SettingMode { get; set; }
+
+        public DataType DataMode { get; set; }
     }
 }

@@ -14,8 +14,7 @@ using SAPFEWSELib;
 using System.Reflection;
 using SAPGuiAutomationLib;
 using System.IO;
-using Ninject;
-using Ninject.Parameters;
+
 
 namespace Young.Data.UnitTest
 {
@@ -25,6 +24,7 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void TestMethod1()
         {
+            
             SqlConnectionStringBuilder ssb = new SqlConnectionStringBuilder();
             ssb.DataSource = "localhost";
             ssb.InitialCatalog = "SAPTestCenter";
@@ -86,14 +86,26 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void BindingTest()
         {
-            DataDriven.Data = ExcelHelper.Current.Open(@"D:\test1.xlsx").ReadAll();
-            DataDriven.CurrentId = 1;
-            DataDriven.GlobalBindingModeType.RecusionMode = RecusionType.Recusion;
-            DataDriven.NonSharedTables = new List<string>();
+            DataEngine dc = new DataEngine();
+            dc.SetData(ExcelHelper.Current.Open(@"D:\test1.xlsx").ReadAll());
+            dc.CurrentId = 1;
             TestC t = new TestC();
-            
-           
-            t.DataBinding();
+            string Msg = "";
+            dc.OnSettingProperty += (o, e) =>
+            {
+                var str = string.Format("Set Property:{0} values {1}\n", e.Property.Name, e.Value);
+                Msg += str;
+            };
+
+            dc.DataBinding(t);
+            //DataDriven.Data = ExcelHelper.Current.Open(@"D:\test1.xlsx").ReadAll();
+            //DataDriven.CurrentId = 1;
+            //DataDriven.GlobalBindingModeType.RecusionMode = RecusionType.Recusion;
+            //DataDriven.NonSharedTables = new List<string>();
+            //TestC t = new TestC();
+
+
+            //t.DataBinding();
             var msg = TestC.Msg;
         }
 
@@ -188,14 +200,14 @@ namespace Young.Data.UnitTest
     {
         public void Test()
         {
-            IKernel kernel = new StandardKernel();
+           
            
         }
 
     }
 
 
-    public class TestBase:DataDriven,ITest
+    public class TestBase:DataDriven
     {
         public static string Msg = "";
         public TestBase(bool isShare)
@@ -210,8 +222,7 @@ namespace Young.Data.UnitTest
 
     }
 
-    public interface ITest
-    { }
+   
 
     
 
@@ -256,7 +267,7 @@ namespace Young.Data.UnitTest
 
         }
 
-        [ColumnBinding(new string[] { },nameof(Create),typeof(TestC),"GroupId")]
+        [ColumnBinding(new string[] { },nameof(Create),typeof(TestC),"GroupId",Order = -1)]
         public TestA TestA { get; set; }
 
         [ColumnBinding]
