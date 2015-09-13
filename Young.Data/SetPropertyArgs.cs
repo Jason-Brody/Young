@@ -10,15 +10,15 @@ namespace Young.Data
 {
     public class SetPropertyArgs : EventArgs
     {
-        public PropertyInfo Property { get; set; }
+        public MemberInfo Member{ get; set; }
 
         public object Value { get; set; }
 
         public ColumnBindingAttribute Attribute { get; set; }
 
-        public SetPropertyArgs(PropertyInfo Prop, object value, ColumnBindingAttribute Attribute)
+        public SetPropertyArgs(MemberInfo Member, object value, ColumnBindingAttribute Attribute)
         {
-            this.Property = Prop;
+            this.Member = Member;
             this.Value = value;
             this.Attribute = Attribute;
         }

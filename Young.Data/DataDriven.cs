@@ -262,7 +262,7 @@ namespace Young.Data
             if (dt != null)
             {
                 string filter = null;
-                filter = getTableFilter(attribute, isSimpleCondition);
+                filter = getTableFilter(attribute);
                 if (filter != null && isColumnsInclude(dt, attribute))
                 {
                     return dt.Select(filter);
@@ -282,7 +282,7 @@ namespace Young.Data
             if (dt != null)
             {
                 string filter = null;
-                filter = getTableFilter(attribute, isSimpleCondition);
+                filter = getTableFilter(attribute);
                 if (filter != null && isColumnsInclude(dt, attribute))
                 {
                     return dt.Select(filter);
@@ -407,21 +407,12 @@ namespace Young.Data
             }
         }
 
-        private string getTableFilter(ColumnBindingAttribute attribute, bool isSimplecondition)
+        private string getTableFilter(ColumnBindingAttribute attribute)
         {
             string filter = null;
             if (attribute != null)
             {
                 filter = dba.IdColumnName + "=" + CurrentId;
-                if (!isSimplecondition)
-                {
-                    if (dba.LoopMode == LoopType.Loop)
-                    {
-                        filter += (" and " + attribute.GroupIdColumnName + "=" + TypeCounts[me].ToString());
-                    }
-                }
-
-
             }
             return filter;
         }

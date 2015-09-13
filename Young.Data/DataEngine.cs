@@ -210,7 +210,7 @@ namespace Young.Data
             }
             else
             {
-                tableDataBinding(reflectionMembers);
+                tableBinding(reflectionMembers);
             }
 
         }
@@ -229,7 +229,7 @@ namespace Young.Data
             }
             else
             {
-                tableDataBinding(reflectionMembers);
+                tableBinding(reflectionMembers);
             }
 
 
@@ -252,32 +252,32 @@ namespace Young.Data
                 }
                 else if (mo.Item1 is MethodInfo)
                 {
-                    invokeMethod(mo.Item1 as MethodInfo);
+                    invokeMethod(mo.Item1 as MethodInfo,mo.Item2);
                 }
             }
         }
 
-        private void tableDataBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
+        private void tableBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
         {
-            foreach (var mo in mos)
+            foreach(var mo in mos)
             {
                 if (mo.Item1 is PropertyInfo)
                 {
                     PropertyInfo prop = mo.Item1 as PropertyInfo;
                     ColumnBindingAttribute colAttr = mo.Item2 as ColumnBindingAttribute;
                     resetColumnName(mo.Item1, colAttr);
-                    bool isSimpleProp = isSimpleField(prop);
+                    bool isSimpleProp = isSimpleField(prop.PropertyType);
 
                     DataRow[] data = null;
 
 
                     if (_bindingMode.DataMode == DataType.FromShareTable)
                     {
-                        data = getSharedData(colAttr, isSimpleProp);
+                        data = getSharedData(colAttr);
                     }
                     else
                     {
-                        data = getPrivateData(colAttr, isSimpleProp);
+                        data = getPrivateData(colAttr);
                     }
 
                     int index = _bindingMode.LoopMode == LoopType.Loop ? TypeCounts[me] : 0;
@@ -288,7 +288,7 @@ namespace Young.Data
                         if (colAttr.Directory == DataDirectory.Input)
                             setSingleProperty(prop, colAttr, data, index);
                         else
-                            getSingleProperty(prop, colAttr, data, index);
+                            getSingleProperty(prop, prop.GetValue(_tempInstance, null), colAttr, data, index);
                     }
                     else
                     {
@@ -298,13 +298,59 @@ namespace Young.Data
                 }
                 else if (mo.Item1 is MethodInfo)
                 {
-                    invokeMethod(mo.Item1 as MethodInfo);
+                    invokeMethod(mo.Item1 as MethodInfo,mo.Item2);
                 }
             }
-
         }
 
-        private DataRow[] getSharedData(ColumnBindingAttribute attribute, bool isSimpleCondition)
+        //private void tableDataBinding(List<Tuple<MemberInfo, OrderAttribute>> mos)
+        //{
+        //    foreach (var mo in mos)
+        //    {
+        //        if (mo.Item1 is PropertyInfo)
+        //        {
+        //            PropertyInfo prop = mo.Item1 as PropertyInfo;
+        //            ColumnBindingAttribute colAttr = mo.Item2 as ColumnBindingAttribute;
+        //            resetColumnName(mo.Item1, colAttr);
+        //            bool isSimpleProp = isSimpleField(prop);
+
+        //            DataRow[] data = null;
+
+
+        //            if (_bindingMode.DataMode == DataType.FromShareTable)
+        //            {
+        //                data = getSharedData(colAttr);
+        //            }
+        //            else
+        //            {
+        //                data = getPrivateData(colAttr);
+        //            }
+
+        //            int index = _bindingMode.LoopMode == LoopType.Loop ? TypeCounts[me] : 0;
+
+
+        //            if (isSimpleProp)
+        //            {
+        //                if (colAttr.Directory == DataDirectory.Input)
+        //                    setSingleProperty(prop, colAttr, data, index);
+        //                else
+        //                    getSingleProperty(prop, colAttr, data, index);
+        //            }
+        //            else
+        //            {
+        //                if (colAttr.Directory == DataDirectory.Input)
+        //                    setComplexProperty(prop, colAttr, data, index);
+        //            }
+        //        }
+        //        else if (mo.Item1 is MethodInfo)
+        //        {
+        //            invokeMethod(mo.Item1 as MethodInfo);
+        //        }
+        //    }
+
+        //}
+
+        private DataRow[] getSharedData(ColumnBindingAttribute attribute)
         {
             DataTable dt = null;
             string tableName = "";
@@ -325,7 +371,7 @@ namespace Young.Data
             if (dt != null)
             {
                 string filter = null;
-                filter = getTableFilter(attribute, isSimpleCondition);
+                filter = getTableFilter(attribute);
                 if (filter != null && isColumnsInclude(dt, attribute))
                 {
                     return dt.Select(filter);
@@ -334,7 +380,7 @@ namespace Young.Data
             return null;
         }
 
-        private DataRow[] getPrivateData(ColumnBindingAttribute attribute, bool isSimpleCondition)
+        private DataRow[] getPrivateData(ColumnBindingAttribute attribute)
         {
             DataTable dt = null;
             if (_ds.Tables.Contains(_tableAttr.TableName))
@@ -345,7 +391,7 @@ namespace Young.Data
             if (dt != null)
             {
                 string filter = null;
-                filter = getTableFilter(attribute, isSimpleCondition);
+                filter = getTableFilter(attribute);
                 if (filter != null && isColumnsInclude(dt, attribute))
                 {
                     return dt.Select(filter);
@@ -355,9 +401,9 @@ namespace Young.Data
             return null;
         }
 
-        private bool isSimpleField(PropertyInfo prop)
+        private bool isSimpleField(Type t)
         {
-            if (prop.PropertyType.IsPrimitive || prop.PropertyType == typeof(string))
+            if (t.IsPrimitive || t == typeof(string))
                 return true;
             return false;
         }
@@ -371,14 +417,14 @@ namespace Young.Data
 
         }
 
-        private void getSingleProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
+        private void getSingleProperty(MemberInfo mi,object value, ColumnBindingAttribute attribute, DataRow[] rows, int index)
         {
             string colName = attribute.ColNames.First();
             DataRow dr = rows[index];
-
-            dr[colName] = prop.GetValue(_tempInstance, null);
+            //prop.GetValue(_tempInstance, null);
+            dr[colName] = value;
             if(OnGettingProperty != null)
-                OnGettingProperty(_tempInstance, new SetPropertyArgs(prop, dr[colName], attribute));
+                OnGettingProperty(_tempInstance, new SetPropertyArgs(mi, dr[colName], attribute));
         }
 
         private void setSingleProperty(PropertyInfo prop, ColumnBindingAttribute attribute, DataRow[] rows, int index)
@@ -461,34 +507,45 @@ namespace Young.Data
             setValue(prop, value, attribute);
         }
 
-        private void invokeMethod(MethodInfo method)
+        private void invokeMethod(MethodInfo method,OrderAttribute attr)
         {
             if (method.GetParameters().Count() == 0)
             {
                 dynamic returnObj = method.Invoke(_tempInstance, null);
-                if (method.ReturnType != typeof(void))
+
+                if(method.ReturnType.IsClass)
                 {
                     runRecusion(returnObj);
+                }
+                else if(isSimpleField(method.ReturnType))
+                {
+                    ColumnBindingAttribute colAttr = attr as ColumnBindingAttribute;
+                    if(colAttr != null && colAttr.Directory == DataDirectory.Output)
+                    {
+                        DataRow[] data = null;
+                        if (_bindingMode.DataMode == DataType.FromShareTable)
+                        {
+                            data = getSharedData(colAttr);
+                        }
+                        else
+                        {
+                            data = getPrivateData(colAttr);
+                        }
+
+                        int index = _bindingMode.LoopMode == LoopType.Loop ? TypeCounts[me] : 0;
+                        getSingleProperty(method,returnObj, colAttr, data, index);
+                    }
                 }
 
             }
         }
 
-        private string getTableFilter(ColumnBindingAttribute attribute, bool isSimplecondition)
+        private string getTableFilter(ColumnBindingAttribute attribute)
         {
             string filter = null;
             if (attribute != null)
             {
                 filter = _tableAttr.IdColumnName + "=" + CurrentId;
-                if (!isSimplecondition)
-                {
-                    if (_bindingMode.LoopMode == LoopType.Loop)
-                    {
-                        filter += (" and " + attribute.GroupIdColumnName + "=" + TypeCounts[me].ToString());
-                    }
-                }
-
-
             }
             return filter;
         }

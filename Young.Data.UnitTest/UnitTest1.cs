@@ -93,11 +93,11 @@ namespace Young.Data.UnitTest
             string Msg = "";
             dc.OnSettingProperty += (o, e) =>
             {
-                var str = string.Format("Set Property:{0} values {1}\n", e.Property.Name, e.Value);
+                var str = string.Format("Set Property:{0} values {1}\n", e.Member.Name, e.Value);
                 Msg += str;
             };
-
-            dc.DataBinding(t);
+            dc.Update(t);
+            
             //DataDriven.Data = ExcelHelper.Current.Open(@"D:\test1.xlsx").ReadAll();
             //DataDriven.CurrentId = 1;
             //DataDriven.GlobalBindingModeType.RecusionMode = RecusionType.Recusion;
@@ -214,7 +214,7 @@ namespace Young.Data.UnitTest
         {
             OnSettingProperty += (o, e) =>
             {
-                var str = string.Format("Set Property:{0} values {1}\n", e.Property.Name, e.Value);
+                var str = string.Format("Set Property:{0} values {1}\n", e.Member.Name, e.Value);
                 Msg += str;
             };
         }
@@ -267,7 +267,7 @@ namespace Young.Data.UnitTest
 
         }
 
-        [ColumnBinding(new string[] { },nameof(Create),typeof(TestC),"GroupId",Order = -1)]
+        [ColumnBinding(new string[] { },nameof(Create),typeof(TestC),Order = -1)]
         public TestA TestA { get; set; }
 
         [ColumnBinding]
