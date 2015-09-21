@@ -463,8 +463,6 @@ namespace Young.Data
             }
         }
 
-        
-
         private void setProperty(PropertyInfo prop, ColumnBindingAttribute attribute, int index)
         {
             var propertyType = prop.PropertyType;
@@ -512,16 +510,12 @@ namespace Young.Data
             if (method.GetParameters().Count() == 0)
             {
                 dynamic returnObj = method.Invoke(_tempInstance, null);
-
-                if(method.ReturnType.IsClass)
-                {
-                    runRecusion(returnObj);
-                }
-                else if(isSimpleField(method.ReturnType))
+                if(isSimpleField(method.ReturnType))
                 {
                     ColumnBindingAttribute colAttr = attr as ColumnBindingAttribute;
-                    if(colAttr != null && colAttr.Directory == DataDirectory.Output)
+                    if (colAttr != null && colAttr.Directory == DataDirectory.Output)
                     {
+                        resetColumnName(method, colAttr);
                         DataRow[] data = null;
                         if (_bindingMode.DataMode == DataType.FromShareTable)
                         {
@@ -533,10 +527,13 @@ namespace Young.Data
                         }
 
                         int index = _bindingMode.LoopMode == LoopType.Loop ? TypeCounts[me] : 0;
-                        getSingleProperty(method,returnObj, colAttr, data, index);
+                        getSingleProperty(method, returnObj, colAttr, data, index);
                     }
                 }
-
+                else if(method.ReturnType.IsClass)
+                {
+                    runRecusion(returnObj);
+                }
             }
         }
 
@@ -568,15 +565,16 @@ namespace Young.Data
         private object getConvertValue(ColumnBindingAttribute colAttr, object SourceValue, Type targetType)
         {
             object value = null;
-            if (colAttr.MethodName != null && colAttr.Target != null)
-            {
-                var customDelegate = Delegate.CreateDelegate(typeof(ColumnBindingConvert), colAttr.Target, colAttr.MethodName) as ColumnBindingConvert;
-                value = customDelegate.Invoke(SourceValue);
-            }
-            else
-            {
-                value = Convert.ChangeType(SourceValue, targetType);
-            }
+            value = Convert.ChangeType(SourceValue, targetType);
+            //if (colAttr.MethodName != null && colAttr.Target != null)
+            //{
+            //    var customDelegate = Delegate.CreateDelegate(typeof(ColumnBindingConvert), colAttr.Target, colAttr.MethodName) as ColumnBindingConvert;
+            //    value = customDelegate.Invoke(SourceValue);
+            //}
+            //else
+            //{
+            //    value = Convert.ChangeType(SourceValue, targetType);
+            //}
             return value;
         }
 
@@ -584,7 +582,6 @@ namespace Young.Data
         {
             if (_bindingMode.RecusionMode == RecusionType.Recusion)
             {
-
                 if (returnObj != null)
                 {
                     Type returnType = returnObj.GetType();
@@ -601,7 +598,6 @@ namespace Young.Data
                         _isFromConfig = status.Item3;
                         _tableAttr = status.Item4;
                     }
-                        
                 }
             }
         }

@@ -72,7 +72,6 @@ namespace Young.Data
             }
         }
 
-
         public void ResetIndex()
         {
             if (TypeCounts.ContainsKey(me))
@@ -435,15 +434,16 @@ namespace Young.Data
         private object getConvertValue(ColumnBindingAttribute colAttr, object SourceValue, Type targetType)
         {
             object value = null;
-            if (colAttr.MethodName != null && colAttr.Target != null)
-            {
-                var customDelegate = Delegate.CreateDelegate(typeof(ColumnBindingConvert), colAttr.Target, colAttr.MethodName) as ColumnBindingConvert;
-                value = customDelegate.Invoke(SourceValue);
-            }
-            else
-            {
-                value = Convert.ChangeType(SourceValue, targetType);
-            }
+            value = Convert.ChangeType(SourceValue, targetType);
+            //if (colAttr.MethodName != null && colAttr.Target != null)
+            //{
+            //    var customDelegate = Delegate.CreateDelegate(typeof(ColumnBindingConvert), colAttr.Target, colAttr.MethodName) as ColumnBindingConvert;
+            //    value = customDelegate.Invoke(SourceValue);
+            //}
+            //else
+            //{
+            //    value = Convert.ChangeType(SourceValue, targetType);
+            //}
             return value;
         }
 

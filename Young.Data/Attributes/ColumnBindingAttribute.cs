@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Young.Data.Attributes
 {
-    public delegate object ColumnBindingConvert(object value);
+    //public delegate object ColumnBindingConvert(object value);
 
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method, AllowMultiple = false)]
     public class ColumnBindingAttribute:OrderAttribute
     {
         public Type Target { get; set; }
@@ -15,8 +15,6 @@ namespace Young.Data.Attributes
         public string MethodName { get; set; }
 
         public DataDirectory Directory { get; set; }
-
-     
 
         public string[] ColNames { get; set; }
 
