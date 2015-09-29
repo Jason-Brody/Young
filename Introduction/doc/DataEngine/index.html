@@ -1,0 +1,98 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>自动化测试 - 数据驱动框架 （C#）</title>
+	<link type="text/css" rel="stylesheet" href="main.css" />
+</head>
+
+<body>
+	
+	<h1>自动化测试 - 数据驱动框架 （C#）</h1>
+	<ol>
+		<li>
+			<div>
+				<h3 class="title">前言</h3>
+				<p class="content">在日常的自动化测试过程中，我们经常要做的一件事就是让我们的脚本参数化（单个脚本对应于多组测试数据），而我们经常会使用EXCEL来维护我们的测试数据。这里我们会碰到一个问题，如何将EXCEL里的数据映射成我们所需要的测试数据。 幸运的是，现在市面上很多测试工具（如UFT,QTP）都支持这样的映射，使用比较方便，但是可扩展性有限，这里我们将介绍一种统一的数据驱动框架来解决我们的问题。</p>
+			</div>
+		</li>
+		<li>
+			<div>
+				<h3>框架介绍</h3>
+				<p>我们知道，在.NET平台上有一个DataSet对象，这个对象是DataTable对象的集合对象，由此我们可以天真地认为一个DataSet对应于一个EXCEL文件，而单个DataTable对应于EXCEL文件里面的一张Sheet，基于以上的概念，此框架的主要功能就是通过绑定标签来实现类内属性和DataTable数据间的数据绑定。</p>
+			</div>
+		</li>
+		<li>
+			<div>
+				<h3>如何构建一个数据驱动实体类</h3>
+				<ol>
+					<li>
+						<div>
+							<h4>创建一个符合业务需求的类</h4>
+							<p>以用户登录测试为例，我们的测试脚本里面主要会包含用户名和密码这两个关键业务信息，由此我们可以构建我们的实体类：
+								<br/>
+								<strong>（注意：实体类需要有一个默认的无参构造函数）</strong>
+							</p>
+                            <iframe src="step1.html" width="100%" height="180"></iframe>
+						</div>
+					</li>
+					<li>
+						<div>
+							<h4>创建数据表</h4>
+							<p>根据业务需求，我们会定义如下的测试数据表（表名：Users）：</p>
+							<table>
+								<thead>
+									<tr>
+										<th>Id</th>
+										<th>UserName</th>
+										<th>Password</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td>
+										<td>Tester1</td>
+										<td>abcd</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>Tester2</td>
+										<td>abcdfe</td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>Tester3</td>
+										<td>abfe</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</li>
+					<li>
+						<div>
+							<h4>修改类</h4>
+                            <iframe src="step2.html" width="100%" height="230"></iframe>
+							
+							<p>
+								这里我们会有一个概念：一个实体类对应于DataSet里一个DataTable, 而类里面的单个属性对应于该DataTable下面的一个Column. DataBinding这个对象会有一个类似于数据库主键概念的字段，默认为Id. 由于我们的表名是Users,
+								而class name 为UserInfo,所以我们在指定DataBinding的时候要指定表名，同样的，由于属性Username和数据表的UserName不一致，我们同样需要指定ColumnBinding的列名.
+
+							</p>
+						</div>
+					</li>
+				</ol>
+			</div>
+		</li>
+		<li>
+			<div>
+				<h3>使用绑定</h3>
+				<p>这里我们会引入一个新的类 DataEngine.</p>
+                <iframe src="step3.html" width="100%" height="200"></iframe>
+				
+			</div>
+		</li>
+
+	</ol>
+</body>
+
+</html>

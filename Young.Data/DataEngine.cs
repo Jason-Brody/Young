@@ -8,13 +8,15 @@ using Young.Data.Attributes;
 
 namespace Young.Data
 {
-    public class DataEngine
+    public sealed class DataEngine
     {
         public event OnPropertyChangeHander OnSettingProperty;
 
         public event OnPropertyChangeHander OnGettingProperty;
 
         public Dictionary<string, DataBindingConfig> ClassConfigs;
+
+        private Dictionary<string, object> _sampleDic;
 
         private Stack<Tuple<object,Type,bool,DataBindingAttribute>> _objStatus;
 
@@ -50,6 +52,7 @@ namespace Young.Data
             _columnTableMappings = new List<Dictionary<string, string>>();
             _objStatus = new Stack<Tuple<object, Type, bool, DataBindingAttribute>>();
             _objs = new Queue<object>();
+            _sampleDic = new Dictionary<string, object>();
         }
 
         private List<Dictionary<string, string>> _columnTableMappings;
@@ -465,6 +468,8 @@ namespace Young.Data
 
         private void setProperty(PropertyInfo prop, ColumnBindingAttribute attribute, int index)
         {
+            resetColumnName(prop, attribute);
+
             var propertyType = prop.PropertyType;
             object value = null;
 
@@ -472,6 +477,17 @@ namespace Young.Data
             if (singleData != null)
             {
                 value = getConvertValue(attribute, singleData.Value, propertyType);
+                if(attribute.Directory == DataDirectory.Output)
+                {
+                    if (_sampleDic.ContainsKey(attribute.ColNames[0]))
+                    {
+                        _sampleDic[attribute.ColNames[0]] = value;
+                    }
+                    else
+                    {
+                        _sampleDic.Add(attribute.ColNames[0], value);
+                    }
+                }
             }
             else
             {
@@ -498,6 +514,13 @@ namespace Young.Data
                         }
                         var rows = dt.Select();
                         value = getConvertValue(attribute, rows, propertyType);
+                    }
+                }
+                else
+                {
+                    if(_sampleDic.ContainsKey(attribute.ColNames[0]))
+                    {
+                        value = _sampleDic[attribute.ColNames[0]];
                     }
                 }
             }
