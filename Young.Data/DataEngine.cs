@@ -145,6 +145,11 @@ namespace Young.Data
 
         private object _tempInstance;
 
+        /// <summary>
+        /// 检查类型是否满足绑定，并且检查绑定来源于配置或者代码
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         private bool isMatchBinding(Type t)
         {
             if (ClassConfigs != null && ClassConfigs.ContainsKey(me.FullName))

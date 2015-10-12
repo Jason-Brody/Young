@@ -124,6 +124,87 @@ namespace Young.Data
             return read(sheet);
         }
 
+        public void WriteAll(DataSet ds)
+        {
+            foreach (DataTable dt in ds.Tables)
+            {
+                Write(dt);
+            }
+        }
+
+        public void Write(DataTable dt)
+        {
+            var sheets = _wbPart.Workbook.Descendants<Sheet>();
+            int sheetCount = sheets.Count();
+            var sheet = sheets.Where(c => c.Name.Value.ToLower() == dt.TableName.ToLower()).FirstOrDefault();
+            WorksheetPart wsPart = null;
+            if (sheet == null)
+            {
+                wsPart = _wbPart.AddNewPart<WorksheetPart>();
+                wsPart.Worksheet = new Worksheet(new SheetData());
+                sheet = new Sheet()
+                {
+                    Id = _wbPart.GetIdOfPart(wsPart),
+                    Name = dt.TableName,
+                    SheetId = (uint)(sheetCount + 1)
+                };
+                _wbPart.Workbook.GetFirstChild<Sheets>().Append(sheet);
+            }
+            else
+            {
+                wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
+                wsPart.Worksheet.GetFirstChild<SheetData>().RemoveAllChildren();
+            }
+
+            SheetData sheetData = wsPart.Worksheet.GetFirstChild<SheetData>();
+
+            Row headRow = new Row();
+            headRow.RowIndex = 1;
+
+
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                Cell c = new Cell();
+                c.DataType = new EnumValue<CellValues>(CellValues.String);
+                c.CellReference = getColumnName(i + 1) + "1";
+                c.CellValue = new CellValue(dt.Columns[i].ColumnName);
+                headRow.AppendChild(c);
+            }
+            sheetData.AppendChild(headRow);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                Row r = new Row();
+                r.RowIndex = (UInt32)i + 2;
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    Cell c = new Cell();
+                    c.DataType = new EnumValue<CellValues>(getCellType(dt.Columns[j].DataType));
+                    c.CellReference = getColumnName(j + 1) + r.RowIndex.ToString();
+
+                    DataRow dr = dt.Rows[i];
+
+                    if (dr.IsNull(j))
+                    {
+                        c.CellValue = new CellValue("");
+                    }
+                    else if (c.DataType.Value == CellValues.Boolean)
+                    {
+                        string value = bool.Parse(dt.Rows[i][j].ToString()) ? "1" : "0";
+                        c.CellValue = new CellValue(value);
+                    }
+                    else
+                    {
+                        c.CellValue = new CellValue(dt.Rows[i][j].ToString());
+                    }
+
+                    r.Append(c);
+                }
+                sheetData.Append(r);
+            }
+
+            _wbPart.Workbook.Save();
+        }
 
         /// <summary>
         /// The method will read part of sheet depend on range start and end
@@ -278,10 +359,7 @@ namespace Young.Data
             return dt;
         }
 
-        public void CleanSheet(string sheetName)
-        {
-
-        }
+        
 
         private string getColumnName(int columnIndex)
         {
@@ -340,80 +418,6 @@ namespace Young.Data
                 }
             }
             return value;
-        }
-
-        public void Write(DataTable dt)
-        {
-            var sheets = _wbPart.Workbook.Descendants<Sheet>();
-            int sheetCount = sheets.Count();
-            var sheet = sheets.Where(c => c.Name.Value.ToLower() == dt.TableName.ToLower()).FirstOrDefault();
-            WorksheetPart wsPart = null;
-            if(sheet==null)
-            {
-                wsPart = _wbPart.AddNewPart<WorksheetPart>();
-                wsPart.Worksheet = new Worksheet(new SheetData());
-                sheet = new Sheet()
-                {
-                    Id = _wbPart.GetIdOfPart(wsPart),
-                    Name = dt.TableName,
-                    SheetId = (uint)(sheetCount + 1)
-                };
-                _wbPart.Workbook.GetFirstChild<Sheets>().Append(sheet);
-            }
-            else
-            {
-                wsPart = _wbPart.GetPartById(sheet.Id) as WorksheetPart;
-                wsPart.Worksheet.GetFirstChild<SheetData>().RemoveAllChildren();
-            }
-
-            SheetData sheetData = wsPart.Worksheet.GetFirstChild<SheetData>();
-
-            Row headRow = new Row();
-            headRow.RowIndex = 1;
-
-
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                Cell c = new Cell();
-                c.DataType = new EnumValue<CellValues>(CellValues.String);
-                c.CellReference = getColumnName(i + 1) + "1";
-                c.CellValue = new CellValue(dt.Columns[i].ColumnName);
-                headRow.AppendChild(c);
-            }
-            sheetData.AppendChild(headRow);
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                Row r = new Row();
-                r.RowIndex = (UInt32)i + 2;
-                for (int j = 0; j < dt.Columns.Count; j++)
-                {
-                    Cell c = new Cell();
-                    c.DataType = new EnumValue<CellValues>(getCellType(dt.Columns[j].DataType));
-                    c.CellReference = getColumnName(j + 1) + r.RowIndex.ToString();
-
-                    DataRow dr = dt.Rows[i];
-
-                    if(dr.IsNull(j))
-                    {
-                        c.CellValue = new CellValue("");
-                    }
-                    else if (c.DataType.Value == CellValues.Boolean)
-                    {
-                        string value = bool.Parse(dt.Rows[i][j].ToString()) ? "1" : "0";
-                        c.CellValue = new CellValue(value);
-                    }
-                    else
-                    {
-                        c.CellValue = new CellValue(dt.Rows[i][j].ToString());
-                    }
-
-                    r.Append(c);
-                }
-                sheetData.Append(r);
-            }
-
-            _wbPart.Workbook.Save();
         }
 
         private  CellValues getCellType(Type dataType)
