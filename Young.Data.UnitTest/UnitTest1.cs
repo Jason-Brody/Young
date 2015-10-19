@@ -24,7 +24,9 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void TestMethod1()
         {
+            
             DataEngine de = new DataEngine();
+
             de.IsUsingSampleData = true;
             var sample = de.Create<SampleDataTest>();
             Assert.AreEqual(sample.Age, 11);

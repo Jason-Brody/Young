@@ -18,7 +18,7 @@ namespace Young.Data
 
         private Dictionary<string, object> _sampleDic;
 
-        private Stack<Tuple<object,Type,bool,DataBindingAttribute>> _objStatus;
+        private Stack<Tuple<object,Type,DataBindingAttribute>> _objStatus;
 
         private DataSet _ds;
 
@@ -39,18 +39,17 @@ namespace Young.Data
 
         private DataBindingAttribute _tableAttr;
 
-        private bool _isFromConfig;
 
         private Type me;
 
         public bool IsUsingSampleData { get; set; }
 
-        protected Dictionary<Type, int> TypeCounts = new Dictionary<Type, int>();
+        private Dictionary<Type, int> TypeCounts = new Dictionary<Type, int>();
 
         public DataEngine()
         {
             _columnTableMappings = new List<Dictionary<string, string>>();
-            _objStatus = new Stack<Tuple<object, Type, bool, DataBindingAttribute>>();
+            _objStatus = new Stack<Tuple<object, Type,  DataBindingAttribute>>();
             _objs = new Queue<object>();
             _sampleDic = new Dictionary<string, object>();
         }
@@ -131,14 +130,9 @@ namespace Young.Data
                 TypeCounts.Add(me, 0);
             }
 
-            if (_isFromConfig)
-            {
-                bindingFromConfigs(ClassConfigs[me.FullName]);
-            }
-            else
-            {
-                bindingFromCode();
-            }
+            
+            bindingFromCode();
+            
         }
 
         
@@ -152,16 +146,10 @@ namespace Young.Data
         /// <returns></returns>
         private bool isMatchBinding(Type t)
         {
-            if (ClassConfigs != null && ClassConfigs.ContainsKey(me.FullName))
-            {
-                _isFromConfig = true;
-                return true;
-            }
             _tableAttr = me.GetCustomAttribute<DataBindingAttribute>(true);
             if (_tableAttr != null)
             {
                 setBindingMode(_tableAttr);
-                _isFromConfig = false;
                 return true;
             }
 
@@ -220,26 +208,6 @@ namespace Young.Data
             {
                 tableBinding(reflectionMembers);
             }
-
-        }
-
-        private void bindingFromConfigs(DataBindingConfig config)
-        {
-            _tableAttr = config.DataBinding;
-            setBindingMode(_tableAttr);
-            _tableAttr.TableName = string.IsNullOrEmpty(_tableAttr.TableName) ? me.Name : _tableAttr.TableName;
-
-            List<Tuple<MemberInfo, OrderAttribute>> reflectionMembers = config.GetInfoes();
-
-            if (IsUsingSampleData)
-            {
-                sampleDataBinding(reflectionMembers);
-            }
-            else
-            {
-                tableBinding(reflectionMembers);
-            }
-
 
         }
 
@@ -615,16 +583,15 @@ namespace Young.Data
                     Type returnType = returnObj.GetType();
                     if (returnType.IsClass && returnType != typeof(string))
                     {
-                        Tuple<object, Type, bool, DataBindingAttribute> status 
-                            = new Tuple<object, Type, bool, DataBindingAttribute>(
-                                _tempInstance,me,_isFromConfig,_tableAttr);
+                        Tuple<object, Type, DataBindingAttribute> status 
+                            = new Tuple<object, Type,  DataBindingAttribute>(
+                                _tempInstance,me,_tableAttr);
                         _objStatus.Push(status);
                         Update(returnObj);
                         status = _objStatus.Pop();
                         _tempInstance = status.Item1;
                         me = status.Item2;
-                        _isFromConfig = status.Item3;
-                        _tableAttr = status.Item4;
+                        _tableAttr = status.Item3;
                     }
                 }
             }
