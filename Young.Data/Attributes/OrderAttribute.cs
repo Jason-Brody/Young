@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Young.Data.Attributes
 {
-    public class OrderAttribute : Attribute
+    public abstract class OrderAttribute : Attribute
     {
         public int Order { get; set; }
 

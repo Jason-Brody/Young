@@ -228,7 +228,7 @@ namespace Young.Data
                 }
                 else if (mo.Item1 is MethodInfo)
                 {
-                    invokeMethod(mo.Item1 as MethodInfo,mo.Item2);
+                    invokeSampleMethod(mo.Item1 as MethodInfo,mo.Item2);
                 }
             }
         }
@@ -384,6 +384,11 @@ namespace Young.Data
             return false;
         }
 
+        /// <summary>
+        /// if column binding attribute has no column name, using the property as column name
+        /// </summary>
+        /// <param name="prop"></param>
+        /// <param name="attr"></param>
         private void resetColumnName(MemberInfo prop, ColumnBindingAttribute attr)
         {
             if (attr.ColNames == null || attr.ColNames.Count() == 0)
@@ -499,6 +504,34 @@ namespace Young.Data
             }
 
             setValue(prop, value, attribute);
+        }
+
+        private void invokeSampleMethod(MethodInfo method, OrderAttribute attr)
+        {
+            if (method.GetParameters().Count() == 0)
+            {
+                dynamic returnObj = method.Invoke(_tempInstance, null);
+                if (isSimpleField(method.ReturnType))
+                {
+                    ColumnBindingAttribute colAttr = attr as ColumnBindingAttribute;
+                    if (colAttr != null && colAttr.Directory == DataDirectory.Output)
+                    {
+                        resetColumnName(method, colAttr);
+                        if (_sampleDic.ContainsKey(colAttr.ColNames[0]))
+                        {
+                            _sampleDic[colAttr.ColNames[0]] = returnObj;
+                        }
+                        else
+                        {
+                            _sampleDic.Add(colAttr.ColNames[0], returnObj);
+                        }
+                    }
+                }
+                else if (method.ReturnType.IsClass)
+                {
+                    runRecusion(returnObj);
+                }
+            }
         }
 
         private void invokeMethod(MethodInfo method,OrderAttribute attr)
