@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Young.Data", "Young.Data\Young.Data.csproj", "{6866FA47-76C9-4919-9CCF-76A31AB593F5}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBindingBuilderTools", "DataBindingBuilderTools\DataBindingBuilderTools.csproj", "{79DDCA11-A3B4-4E24-8A51-FAAA7DE06EF5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Introduction", "Introduction\Introduction.csproj", "{4DF4DE2B-B533-43C9-8266-99943863B849}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Young.Excel.Interop", "Young.Excel.Interop\Young.Excel.Interop.csproj", "{4A6D43BC-B910-4D05-8F8F-A84093B3EC9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4DF4DE2B-B533-43C9-8266-99943863B849}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DF4DE2B-B533-43C9-8266-99943863B849}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DF4DE2B-B533-43C9-8266-99943863B849}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A6D43BC-B910-4D05-8F8F-A84093B3EC9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A6D43BC-B910-4D05-8F8F-A84093B3EC9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A6D43BC-B910-4D05-8F8F-A84093B3EC9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A6D43BC-B910-4D05-8F8F-A84093B3EC9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
