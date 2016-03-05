@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Young.Data.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Young.Data.Extension
 {
@@ -13,14 +13,14 @@ namespace Young.Data.Extension
     {
         public static void ExportToFile<T>(this IEnumerable<T> Data, string fileName, string splitChar) where T : class
         {
-            List<PropertyInfo> props = typeof(T).GetProperties().Where(p => (p.PropertyType == typeof(string) || p.PropertyType.IsValueType) && p.DeclaringType.IsPublic).ToList();
+            List<PropertyInfo> props = typeof(T).GetProperties().Where(p => (p.PropertyType == typeof(string) || p.PropertyType.IsPrimitive)).ToList();
 
             using (StreamWriter sw = new StreamWriter(fileName, false))
             {
                 string line = "";
                 foreach (var prop in props)
                 {
-                    var attr = prop.GetCustomAttribute<AliasAttribute>();
+                    var attr = prop.GetCustomAttribute<DisplayAttribute>();
                     if (attr != null)
                         line += attr.Name + splitChar;
                     else

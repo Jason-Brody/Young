@@ -12,7 +12,6 @@ using Young.Data.Attributes;
 using SAPAutomation;
 using SAPFEWSELib;
 using System.Reflection;
-using SAPGuiAutomationLib;
 using System.IO;
 
 
@@ -24,7 +23,9 @@ namespace Young.Data.UnitTest
         [TestMethod]
         public void TestMethod1()
         {
-            
+            var prop = typeof(ReflectionTest).GetProperties().Where(p => p.PropertyType.IsPrimitive).ToList();
+
+
             DataEngine de = new DataEngine();
 
             de.IsUsingSampleData = true;
@@ -33,6 +34,22 @@ namespace Young.Data.UnitTest
             var sample1 = de.Create<SampleDataB>();
             Assert.AreEqual(sample1.Age, 11);
         }
+    }
+
+
+    public class ReflectionTest
+    {
+        private int _id;
+
+        public string Id
+        {
+            get { return _id.ToString(); }
+            set { _id = int.Parse(value); }
+        }
+
+        public string Name { get; set; }
+
+        private string _age;
     }
 
     [DataBinding]
@@ -54,5 +71,5 @@ namespace Young.Data.UnitTest
         public int Age { get; set; }
     }
 
-  
+
 }

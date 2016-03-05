@@ -6,14 +6,22 @@ using System.Threading.Tasks;
 
 namespace Young.Data.Attributes
 {
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class AliasAttribute : Attribute
+
+
+    [AttributeUsage(AttributeTargets.Property,AllowMultiple =true)]
+    public class ColMappingAttribute:Attribute
     {
-        public AliasAttribute(string Name)
+        public ColMappingAttribute(string Name)
         {
             this.Name = Name;
         }
-
+       
         public string Name { get; set; }
+
+ 
+
+       
+
+        
     }
 }

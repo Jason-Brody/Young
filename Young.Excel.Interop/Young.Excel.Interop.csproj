@@ -38,6 +38,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -52,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Attributes\ExcelFormulaAttribute.cs" />
     <Compile Include="Attributes\ExcelStyleAttribute.cs" />
+    <Compile Include="Attributes\IgnoreAttribute.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Extensions\Export.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

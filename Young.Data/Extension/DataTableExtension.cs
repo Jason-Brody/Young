@@ -7,11 +7,60 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using Young.Data.Attributes;
+using System.Reflection;
 
-namespace Young.Data.Extension
+namespace Young.Data
 {
+    
+
     public static class DataTableExtension
     {
+        public static List<T> ToList<T>(this DataTable dt) where T : class, new()
+        {
+            List<T> items = new List<T>();
+            Dictionary<string, PropertyInfo> propMappings = new Dictionary<string, PropertyInfo>();
+            foreach (var prop in typeof(T).GetProperties().Where(p => p.PropertyType.IsPrimitive || p.PropertyType == typeof(string)))
+            {
+                var mappingAttributes = prop.GetCustomAttributes<ColMappingAttribute>();
+                if (mappingAttributes != null && mappingAttributes.Count() > 0)
+                {
+                    foreach(var ma in mappingAttributes)
+                    {
+                        propMappings.Add(ma.Name.ToLower(), prop);
+                    }
+                }
+                else
+                {
+                    propMappings.Add(prop.Name.ToLower(), prop);
+                }
+            }
+            
+            Dictionary<string, PropertyInfo> colMappings = new Dictionary<string, PropertyInfo>();
+
+            foreach(DataColumn dc in dt.Columns)
+            {
+                var key = dc.ColumnName.ToLower();
+                if (propMappings.ContainsKey(key))
+                {
+                    colMappings.Add(dc.ColumnName, propMappings[key]);
+                }
+            }
+
+            foreach(DataRow dr in dt.Rows)
+            {
+                T obj = new T();
+                foreach(var item in colMappings)
+                {
+                    object value = Convert.ChangeType(dr[item.Key],item.Value.PropertyType);
+                    item.Value.SetValue(obj, value);
+                }
+                items.Add(obj);
+            }
+
+            return items;
+        }
+
+        #region Obsolute
         public static void ExportToExcel(this DataTable dataTable, string File, string sheetName)
         {
             createExcelFile(File, dataTable, sheetName);
@@ -35,7 +84,7 @@ namespace Young.Data.Extension
 
         }
 
-        
+
         #region EXPORT EXCEL
         private static void createExcelFile(string filePath, DataTable dt, string tableName = "")
         {
@@ -230,5 +279,9 @@ namespace Young.Data.Extension
             return value;
         }
         #endregion
+        #endregion
     }
 }
+
+
+
