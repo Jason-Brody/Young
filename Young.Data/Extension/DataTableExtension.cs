@@ -11,33 +11,55 @@ using System.Reflection;
 
 namespace Young.Data
 {
-    
+    internal class MyDataProperty
+    {
+        public PropertyInfo Property { get; set; }
+
+        public DataConverterMethodAttribute Converter { get; set; }
+    }
 
     public static class DataTableExtension
     {
         public static List<T> ToList<T>(this DataTable dt) where T : class, new()
         {
             List<T> items = new List<T>();
-            Dictionary<string, PropertyInfo> propMappings = new Dictionary<string, PropertyInfo>();
-            foreach (var prop in typeof(T).GetProperties().Where(p => p.PropertyType.IsPrimitive || p.PropertyType == typeof(string)))
+            Dictionary<string, MyDataProperty> propMappings = new Dictionary<string, MyDataProperty>();
+
+            bool isPropValid = false;
+
+            foreach (var prop in typeof(T).GetProperties())
             {
+                isPropValid = false;
                 var mappingAttributes = prop.GetCustomAttributes<ColMappingAttribute>();
-                if (mappingAttributes != null && mappingAttributes.Count() > 0)
+                var converter = prop.GetCustomAttribute<DataConverterMethodAttribute>();
+
+
+                if (converter != null)
+                    isPropValid = true;
+
+                if (prop.PropertyType.IsPrimitive || prop.PropertyType == typeof(string))
+                    isPropValid = true;
+
+                if (isPropValid)
                 {
-                    foreach(var ma in mappingAttributes)
+                    if (mappingAttributes != null && mappingAttributes.Count() > 0)
                     {
-                        propMappings.Add(ma.Name.ToLower(), prop);
+                        foreach (var ma in mappingAttributes)
+                        {
+                            propMappings.Add(ma.Name.ToLower(), new MyDataProperty() { Property = prop, Converter = converter });
+                        }
+                    }
+                    else
+                    {
+                        propMappings.Add(prop.Name.ToLower(), new MyDataProperty() { Property = prop, Converter = converter });
                     }
                 }
-                else
-                {
-                    propMappings.Add(prop.Name.ToLower(), prop);
-                }
-            }
-            
-            Dictionary<string, PropertyInfo> colMappings = new Dictionary<string, PropertyInfo>();
 
-            foreach(DataColumn dc in dt.Columns)
+            }
+
+            Dictionary<string, MyDataProperty> colMappings = new Dictionary<string, MyDataProperty>();
+
+            foreach (DataColumn dc in dt.Columns)
             {
                 var key = dc.ColumnName.ToLower();
                 if (propMappings.ContainsKey(key))
@@ -46,13 +68,19 @@ namespace Young.Data
                 }
             }
 
-            foreach(DataRow dr in dt.Rows)
+            foreach (DataRow dr in dt.Rows)
             {
                 T obj = new T();
-                foreach(var item in colMappings)
+                foreach (var item in colMappings)
                 {
-                    object value = Convert.ChangeType(dr[item.Key],item.Value.PropertyType);
-                    item.Value.SetValue(obj, value);
+                    object value = null;
+                    if (item.Value.Converter == null)
+                        value = Convert.ChangeType(dr[item.Key], item.Value.Property.PropertyType);
+                    else
+                        value = item.Value.Converter.GetConverter().Convert(dr[item.Key]);
+
+                    item.Value.Property.SetValue(obj, value);
+
                 }
                 items.Add(obj);
             }

@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\BizDataAttribute.cs" />
+    <Compile Include="Attributes\ColDataConverter.cs" />
     <Compile Include="Attributes\ColMappingAttribute.cs" />
     <Compile Include="Attributes\ColumnBindingAttribute.cs" />
     <Compile Include="Attributes\ComplexSampleDataAttribute.cs" />
