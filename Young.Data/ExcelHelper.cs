@@ -43,6 +43,8 @@ namespace Young.Data
         }
         private ExcelHelper() {  }
 
+        Dictionary<int, string> shareStringDic;
+
         public ExcelHelper Open(string ExcelFile,bool IsEditable=false)
         {
             _expectSheets = new List<string>();
@@ -51,6 +53,16 @@ namespace Young.Data
             _doc = SpreadsheetDocument.Open(_excelFilePath, IsEditable);
             _wbPart = _doc.WorkbookPart;
             _shareStringPart = _wbPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+            
+            shareStringDic = new Dictionary<int, string>();
+           
+            int j = 0;
+           
+            foreach (var item in _shareStringPart.SharedStringTable.Elements<SharedStringItem>()) {
+                shareStringDic.Add(j, item.InnerText);
+                j++;
+            }
+
             return _instance;
         }
 
@@ -393,16 +405,20 @@ namespace Young.Data
         private string getCellValue(Cell cell)
         {
             string value = cell.InnerText;
-            if(cell.DataType != null)
+            
+          
+            if (cell.DataType != null)
             {
                 switch(cell.DataType.Value)
                 {
                     case CellValues.SharedString:
-                        
-                        if(_shareStringPart != null)
-                        {
-                            value = _shareStringPart.SharedStringTable.ElementAt(int.Parse(value)).InnerText;
+                        if (shareStringDic.Count > 0) {
+                            value = shareStringDic[int.Parse(value)];
                         }
+                        //if(_shareStringPart != null)
+                        //{
+                        //    value = _shareStringPart.SharedStringTable.ElementAt(int.Parse(value)).InnerText;
+                        //}
                         break;
                     case CellValues.Boolean:
                         switch(value)
