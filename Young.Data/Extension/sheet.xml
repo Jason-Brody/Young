@@ -1,0 +1,2299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<x:worksheet xmlns:x="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <x:sheetData>
+    <x:row r="1">
+      <x:c r="A1" t="str">
+        <x:v>IDocNumber</x:v>
+      </x:c>
+      <x:c r="B1" t="str">
+        <x:v>CreateDT</x:v>
+      </x:c>
+      <x:c r="C1" t="str">
+        <x:v>Time</x:v>
+      </x:c>
+      <x:c r="D1" t="str">
+        <x:v>Status</x:v>
+      </x:c>
+      <x:c r="E1" t="str">
+        <x:v>Application</x:v>
+      </x:c>
+      <x:c r="F1" t="str">
+        <x:v>Msg</x:v>
+      </x:c>
+      <x:c r="G1" t="str">
+        <x:v>MsgFunction</x:v>
+      </x:c>
+      <x:c r="H1" t="str">
+        <x:v>CompanyCode</x:v>
+      </x:c>
+      <x:c r="I1" t="str">
+        <x:v>Description</x:v>
+      </x:c>
+      <x:c r="J1" t="str">
+        <x:v>DT</x:v>
+      </x:c>
+      <x:c r="K1" t="str">
+        <x:v>RefDocNumber</x:v>
+      </x:c>
+      <x:c r="L1" t="str">
+        <x:v>AccDocNumber</x:v>
+      </x:c>
+      <x:c r="M1" t="str">
+        <x:v>PostDate</x:v>
+      </x:c>
+      <x:c r="N1" t="str">
+        <x:v>DocDate</x:v>
+      </x:c>
+      <x:c r="O1" t="str">
+        <x:v>UserId</x:v>
+      </x:c>
+      <x:c r="P1" t="str">
+        <x:v>Id</x:v>
+      </x:c>
+      <x:c r="Q1" t="str">
+        <x:v>InterfaceId</x:v>
+      </x:c>
+      <x:c r="R1" t="str">
+        <x:v>IsProcess</x:v>
+      </x:c>
+      <x:c r="S1" t="str">
+        <x:v>IsFinished</x:v>
+      </x:c>
+      <x:c r="T1" t="str">
+        <x:v>ProcessDt</x:v>
+      </x:c>
+      <x:c r="U1" t="str">
+        <x:v>FinishDt</x:v>
+      </x:c>
+      <x:c r="V1" t="str">
+        <x:v>Mid</x:v>
+      </x:c>
+      <x:c r="W1" t="str">
+        <x:v>DataCount</x:v>
+      </x:c>
+      <x:c r="X1" t="str">
+        <x:v>IsSelected</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="2">
+      <x:c r="A2" t="str">
+        <x:v>0000000646426761</x:v>
+      </x:c>
+      <x:c r="B2" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C2" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D2" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E2" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F2" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G2" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H2" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I2" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J2" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K2" t="str">
+        <x:v>6190010164</x:v>
+      </x:c>
+      <x:c r="L2" t="str">
+        <x:v>6190010164</x:v>
+      </x:c>
+      <x:c r="M2" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N2" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O2" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P2" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q2" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R2" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S2" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T2" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U2" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V2" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W2" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X2" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="3">
+      <x:c r="A3" t="str">
+        <x:v>0000000646426762</x:v>
+      </x:c>
+      <x:c r="B3" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C3" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D3" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E3" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F3" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G3" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H3" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I3" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J3" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K3" t="str">
+        <x:v>6190010166</x:v>
+      </x:c>
+      <x:c r="L3" t="str">
+        <x:v>6190010166</x:v>
+      </x:c>
+      <x:c r="M3" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N3" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O3" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P3" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q3" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R3" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S3" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T3" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U3" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V3" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W3" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X3" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="4">
+      <x:c r="A4" t="str">
+        <x:v>0000000646426763</x:v>
+      </x:c>
+      <x:c r="B4" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C4" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D4" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E4" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F4" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G4" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H4" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I4" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J4" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K4" t="str">
+        <x:v>6190010165</x:v>
+      </x:c>
+      <x:c r="L4" t="str">
+        <x:v>6190010165</x:v>
+      </x:c>
+      <x:c r="M4" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N4" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O4" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P4" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q4" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R4" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S4" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T4" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U4" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V4" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W4" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X4" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="5">
+      <x:c r="A5" t="str">
+        <x:v>0000000646426764</x:v>
+      </x:c>
+      <x:c r="B5" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C5" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D5" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E5" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F5" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G5" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H5" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I5" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J5" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K5" t="str">
+        <x:v>6190010167</x:v>
+      </x:c>
+      <x:c r="L5" t="str">
+        <x:v>6190010167</x:v>
+      </x:c>
+      <x:c r="M5" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N5" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O5" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P5" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q5" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R5" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S5" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T5" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U5" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V5" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W5" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X5" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="6">
+      <x:c r="A6" t="str">
+        <x:v>0000000646426765</x:v>
+      </x:c>
+      <x:c r="B6" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C6" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D6" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E6" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F6" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G6" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H6" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I6" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J6" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K6" t="str">
+        <x:v>6190010171</x:v>
+      </x:c>
+      <x:c r="L6" t="str">
+        <x:v>6190010171</x:v>
+      </x:c>
+      <x:c r="M6" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N6" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O6" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P6" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q6" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R6" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S6" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T6" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U6" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V6" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W6" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X6" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="7">
+      <x:c r="A7" t="str">
+        <x:v>0000000646426766</x:v>
+      </x:c>
+      <x:c r="B7" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C7" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D7" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E7" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F7" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G7" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H7" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I7" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J7" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K7" t="str">
+        <x:v>6190010172</x:v>
+      </x:c>
+      <x:c r="L7" t="str">
+        <x:v>6190010172</x:v>
+      </x:c>
+      <x:c r="M7" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N7" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O7" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P7" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q7" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R7" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S7" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T7" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U7" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V7" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W7" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X7" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="8">
+      <x:c r="A8" t="str">
+        <x:v>0000000646426767</x:v>
+      </x:c>
+      <x:c r="B8" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C8" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D8" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E8" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F8" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G8" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H8" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I8" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J8" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K8" t="str">
+        <x:v>6190010168</x:v>
+      </x:c>
+      <x:c r="L8" t="str">
+        <x:v>6190010168</x:v>
+      </x:c>
+      <x:c r="M8" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N8" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O8" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P8" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q8" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R8" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S8" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T8" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U8" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V8" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W8" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X8" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="9">
+      <x:c r="A9" t="str">
+        <x:v>0000000646426768</x:v>
+      </x:c>
+      <x:c r="B9" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C9" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D9" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E9" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F9" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G9" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H9" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I9" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J9" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K9" t="str">
+        <x:v>6190010169</x:v>
+      </x:c>
+      <x:c r="L9" t="str">
+        <x:v>6190010169</x:v>
+      </x:c>
+      <x:c r="M9" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N9" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O9" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P9" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q9" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R9" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S9" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T9" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U9" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V9" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W9" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X9" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="10">
+      <x:c r="A10" t="str">
+        <x:v>0000000646426769</x:v>
+      </x:c>
+      <x:c r="B10" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C10" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D10" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E10" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F10" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G10" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H10" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I10" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J10" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K10" t="str">
+        <x:v>6190010170</x:v>
+      </x:c>
+      <x:c r="L10" t="str">
+        <x:v>6190010170</x:v>
+      </x:c>
+      <x:c r="M10" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N10" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O10" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P10" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q10" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R10" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S10" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T10" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U10" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V10" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W10" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X10" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="11">
+      <x:c r="A11" t="str">
+        <x:v>0000000646426770</x:v>
+      </x:c>
+      <x:c r="B11" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C11" t="n">
+        <x:v>05:29:19</x:v>
+      </x:c>
+      <x:c r="D11" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E11" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F11" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G11" t="str">
+        <x:v>GLS</x:v>
+      </x:c>
+      <x:c r="H11" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I11" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J11" t="str">
+        <x:v>N6</x:v>
+      </x:c>
+      <x:c r="K11" t="str">
+        <x:v>6190010173</x:v>
+      </x:c>
+      <x:c r="L11" t="str">
+        <x:v>6190010173</x:v>
+      </x:c>
+      <x:c r="M11" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N11" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O11" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P11" t="n">
+        <x:v>4591</x:v>
+      </x:c>
+      <x:c r="Q11" t="n">
+        <x:v>320</x:v>
+      </x:c>
+      <x:c r="R11" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S11" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T11" t="str">
+        <x:v>2016/6/20 13:19:10</x:v>
+      </x:c>
+      <x:c r="U11" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="V11" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W11" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X11" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="12">
+      <x:c r="A12" t="str">
+        <x:v>0000000646426771</x:v>
+      </x:c>
+      <x:c r="B12" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C12" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D12" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E12" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F12" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G12" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H12" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I12" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J12" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K12" t="str">
+        <x:v>H440036201/D4408</x:v>
+      </x:c>
+      <x:c r="L12" t="str">
+        <x:v>9740001347</x:v>
+      </x:c>
+      <x:c r="M12" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N12" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O12" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P12" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q12" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R12" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S12" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T12" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U12" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V12" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W12" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X12" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="13">
+      <x:c r="A13" t="str">
+        <x:v>0000000646426772</x:v>
+      </x:c>
+      <x:c r="B13" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C13" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D13" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E13" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F13" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G13" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H13" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I13" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J13" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K13" t="str">
+        <x:v>H440036236/D4408</x:v>
+      </x:c>
+      <x:c r="L13" t="str">
+        <x:v>9740001348</x:v>
+      </x:c>
+      <x:c r="M13" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N13" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O13" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P13" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q13" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R13" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S13" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T13" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U13" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V13" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W13" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X13" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="14">
+      <x:c r="A14" t="str">
+        <x:v>0000000646426773</x:v>
+      </x:c>
+      <x:c r="B14" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C14" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D14" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E14" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F14" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G14" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H14" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I14" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J14" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K14" t="str">
+        <x:v>H440036238/D4408</x:v>
+      </x:c>
+      <x:c r="L14" t="str">
+        <x:v>9740001349</x:v>
+      </x:c>
+      <x:c r="M14" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N14" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O14" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P14" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q14" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R14" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S14" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T14" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U14" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V14" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W14" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X14" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="15">
+      <x:c r="A15" t="str">
+        <x:v>0000000646426774</x:v>
+      </x:c>
+      <x:c r="B15" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C15" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D15" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E15" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F15" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G15" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H15" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I15" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J15" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K15" t="str">
+        <x:v>H440036243/D4408</x:v>
+      </x:c>
+      <x:c r="L15" t="str">
+        <x:v>9740001350</x:v>
+      </x:c>
+      <x:c r="M15" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N15" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O15" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P15" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q15" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R15" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S15" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T15" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U15" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V15" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W15" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X15" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="16">
+      <x:c r="A16" t="str">
+        <x:v>0000000646426775</x:v>
+      </x:c>
+      <x:c r="B16" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C16" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D16" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E16" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F16" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G16" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H16" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I16" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J16" t="str">
+        <x:v>YZ</x:v>
+      </x:c>
+      <x:c r="K16" t="str">
+        <x:v>D440000314</x:v>
+      </x:c>
+      <x:c r="L16" t="str">
+        <x:v>6540000314</x:v>
+      </x:c>
+      <x:c r="M16" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N16" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O16" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P16" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q16" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R16" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S16" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T16" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U16" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V16" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W16" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X16" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="17">
+      <x:c r="A17" t="str">
+        <x:v>0000000646426776</x:v>
+      </x:c>
+      <x:c r="B17" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C17" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D17" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E17" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F17" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G17" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H17" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I17" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J17" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K17" t="str">
+        <x:v>H440036242/D4408</x:v>
+      </x:c>
+      <x:c r="L17" t="str">
+        <x:v>9740001351</x:v>
+      </x:c>
+      <x:c r="M17" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="N17" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O17" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P17" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q17" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R17" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S17" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T17" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U17" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V17" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W17" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X17" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="18">
+      <x:c r="A18" t="str">
+        <x:v>0000000646426777</x:v>
+      </x:c>
+      <x:c r="B18" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C18" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D18" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E18" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F18" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G18" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H18" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I18" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J18" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K18" t="str">
+        <x:v>H440036339/D4408</x:v>
+      </x:c>
+      <x:c r="L18" t="str">
+        <x:v>9740001352</x:v>
+      </x:c>
+      <x:c r="M18" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="N18" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="O18" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P18" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q18" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R18" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S18" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T18" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U18" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V18" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W18" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X18" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="19">
+      <x:c r="A19" t="str">
+        <x:v>0000000646426778</x:v>
+      </x:c>
+      <x:c r="B19" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C19" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D19" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E19" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F19" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G19" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H19" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I19" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J19" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K19" t="str">
+        <x:v>H440036349/D4408</x:v>
+      </x:c>
+      <x:c r="L19" t="str">
+        <x:v>9740001353</x:v>
+      </x:c>
+      <x:c r="M19" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="N19" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="O19" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P19" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q19" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R19" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S19" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T19" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U19" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V19" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W19" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X19" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="20">
+      <x:c r="A20" t="str">
+        <x:v>0000000646426779</x:v>
+      </x:c>
+      <x:c r="B20" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C20" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D20" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E20" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F20" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G20" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H20" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I20" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J20" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K20" t="str">
+        <x:v>H440036352/D4408</x:v>
+      </x:c>
+      <x:c r="L20" t="str">
+        <x:v>9740001354</x:v>
+      </x:c>
+      <x:c r="M20" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="N20" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="O20" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P20" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q20" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R20" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S20" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T20" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U20" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V20" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W20" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X20" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="21">
+      <x:c r="A21" t="str">
+        <x:v>0000000646426780</x:v>
+      </x:c>
+      <x:c r="B21" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C21" t="n">
+        <x:v>05:32:30</x:v>
+      </x:c>
+      <x:c r="D21" t="str">
+        <x:v>51</x:v>
+      </x:c>
+      <x:c r="E21" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F21" t="str">
+        <x:v>004</x:v>
+      </x:c>
+      <x:c r="G21" t="str">
+        <x:v>ICS</x:v>
+      </x:c>
+      <x:c r="H21" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I21" t="str">
+        <x:v>Errors occured during processing in AIF; see transaction /AIF/ERR</x:v>
+      </x:c>
+      <x:c r="J21" t="str">
+        <x:v>BI</x:v>
+      </x:c>
+      <x:c r="K21" t="str">
+        <x:v>H440036354/D4408</x:v>
+      </x:c>
+      <x:c r="L21" t="str">
+        <x:v>9740001355</x:v>
+      </x:c>
+      <x:c r="M21" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="N21" t="str">
+        <x:v>2016/6/7 0:00:00</x:v>
+      </x:c>
+      <x:c r="O21" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P21" t="n">
+        <x:v>4592</x:v>
+      </x:c>
+      <x:c r="Q21" t="n">
+        <x:v>321</x:v>
+      </x:c>
+      <x:c r="R21" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S21" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T21" t="str">
+        <x:v>2016/6/20 13:29:41</x:v>
+      </x:c>
+      <x:c r="U21" t="str">
+        <x:v>2016/6/20 13:32:56</x:v>
+      </x:c>
+      <x:c r="V21" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W21" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X21" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="22">
+      <x:c r="A22" t="str">
+        <x:v>0000000646426781</x:v>
+      </x:c>
+      <x:c r="B22" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C22" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D22" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E22" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F22" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G22" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H22" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I22" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J22" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K22" t="str">
+        <x:v>7540005962</x:v>
+      </x:c>
+      <x:c r="L22" t="str">
+        <x:v>7540005962</x:v>
+      </x:c>
+      <x:c r="M22" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N22" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O22" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P22" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q22" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R22" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S22" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T22" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U22" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V22" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W22" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X22" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="23">
+      <x:c r="A23" t="str">
+        <x:v>0000000646426782</x:v>
+      </x:c>
+      <x:c r="B23" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C23" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D23" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E23" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F23" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G23" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H23" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I23" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J23" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K23" t="str">
+        <x:v>7540005963</x:v>
+      </x:c>
+      <x:c r="L23" t="str">
+        <x:v>7540005963</x:v>
+      </x:c>
+      <x:c r="M23" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N23" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O23" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P23" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q23" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R23" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S23" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T23" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U23" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V23" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W23" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X23" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="24">
+      <x:c r="A24" t="str">
+        <x:v>0000000646426783</x:v>
+      </x:c>
+      <x:c r="B24" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C24" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D24" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E24" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F24" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G24" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H24" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I24" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J24" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K24" t="str">
+        <x:v>7540005964</x:v>
+      </x:c>
+      <x:c r="L24" t="str">
+        <x:v>7540005964</x:v>
+      </x:c>
+      <x:c r="M24" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N24" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O24" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P24" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q24" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R24" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S24" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T24" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U24" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V24" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W24" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X24" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="25">
+      <x:c r="A25" t="str">
+        <x:v>0000000646426784</x:v>
+      </x:c>
+      <x:c r="B25" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C25" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D25" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E25" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F25" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G25" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H25" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I25" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J25" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K25" t="str">
+        <x:v>7540005966</x:v>
+      </x:c>
+      <x:c r="L25" t="str">
+        <x:v>7540005966</x:v>
+      </x:c>
+      <x:c r="M25" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N25" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O25" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P25" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q25" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R25" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S25" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T25" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U25" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V25" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W25" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X25" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="26">
+      <x:c r="A26" t="str">
+        <x:v>0000000646426785</x:v>
+      </x:c>
+      <x:c r="B26" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C26" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D26" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E26" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F26" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G26" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H26" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I26" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J26" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K26" t="str">
+        <x:v>7540005967</x:v>
+      </x:c>
+      <x:c r="L26" t="str">
+        <x:v>7540005967</x:v>
+      </x:c>
+      <x:c r="M26" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N26" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O26" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P26" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q26" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R26" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S26" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T26" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U26" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V26" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W26" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X26" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="27">
+      <x:c r="A27" t="str">
+        <x:v>0000000646426786</x:v>
+      </x:c>
+      <x:c r="B27" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C27" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D27" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E27" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F27" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G27" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H27" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I27" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J27" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K27" t="str">
+        <x:v>7540005965</x:v>
+      </x:c>
+      <x:c r="L27" t="str">
+        <x:v>7540005965</x:v>
+      </x:c>
+      <x:c r="M27" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N27" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O27" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P27" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q27" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R27" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S27" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T27" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U27" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V27" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W27" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X27" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="28">
+      <x:c r="A28" t="str">
+        <x:v>0000000646426787</x:v>
+      </x:c>
+      <x:c r="B28" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C28" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D28" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E28" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F28" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G28" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H28" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I28" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J28" t="str">
+        <x:v>WE</x:v>
+      </x:c>
+      <x:c r="K28" t="str">
+        <x:v>675872602</x:v>
+      </x:c>
+      <x:c r="L28" t="str">
+        <x:v>7140001719</x:v>
+      </x:c>
+      <x:c r="M28" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N28" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O28" t="str">
+        <x:v>21856969</x:v>
+      </x:c>
+      <x:c r="P28" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q28" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R28" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S28" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T28" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U28" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V28" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W28" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X28" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="29">
+      <x:c r="A29" t="str">
+        <x:v>0000000646426788</x:v>
+      </x:c>
+      <x:c r="B29" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C29" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D29" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E29" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F29" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G29" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H29" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I29" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J29" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K29" t="str">
+        <x:v>7540005968</x:v>
+      </x:c>
+      <x:c r="L29" t="str">
+        <x:v>7540005968</x:v>
+      </x:c>
+      <x:c r="M29" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N29" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O29" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P29" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q29" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R29" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S29" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T29" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U29" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V29" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W29" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X29" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="30">
+      <x:c r="A30" t="str">
+        <x:v>0000000646426789</x:v>
+      </x:c>
+      <x:c r="B30" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C30" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D30" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E30" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F30" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G30" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H30" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I30" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J30" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K30" t="str">
+        <x:v>7540005969</x:v>
+      </x:c>
+      <x:c r="L30" t="str">
+        <x:v>7540005969</x:v>
+      </x:c>
+      <x:c r="M30" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N30" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O30" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P30" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q30" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R30" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S30" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T30" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U30" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V30" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W30" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X30" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+    <x:row r="31">
+      <x:c r="A31" t="str">
+        <x:v>0000000646426790</x:v>
+      </x:c>
+      <x:c r="B31" t="str">
+        <x:v>2016/6/20 0:00:00</x:v>
+      </x:c>
+      <x:c r="C31" t="n">
+        <x:v>05:35:51</x:v>
+      </x:c>
+      <x:c r="D31" t="str">
+        <x:v>53</x:v>
+      </x:c>
+      <x:c r="E31" t="str">
+        <x:v>/AIF/IDOC</x:v>
+      </x:c>
+      <x:c r="F31" t="str">
+        <x:v>003</x:v>
+      </x:c>
+      <x:c r="G31" t="str">
+        <x:v>SHS</x:v>
+      </x:c>
+      <x:c r="H31" t="str">
+        <x:v>TW00</x:v>
+      </x:c>
+      <x:c r="I31" t="str">
+        <x:v>IDoc successfully processed by AIF</x:v>
+      </x:c>
+      <x:c r="J31" t="str">
+        <x:v>WA</x:v>
+      </x:c>
+      <x:c r="K31" t="str">
+        <x:v>7540005971</x:v>
+      </x:c>
+      <x:c r="L31" t="str">
+        <x:v>7540005971</x:v>
+      </x:c>
+      <x:c r="M31" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="N31" t="str">
+        <x:v>2016/6/6 0:00:00</x:v>
+      </x:c>
+      <x:c r="O31" t="str">
+        <x:v>SCBATCH</x:v>
+      </x:c>
+      <x:c r="P31" t="n">
+        <x:v>4593</x:v>
+      </x:c>
+      <x:c r="Q31" t="n">
+        <x:v>322</x:v>
+      </x:c>
+      <x:c r="R31" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="S31" t="b">
+        <x:v>1</x:v>
+      </x:c>
+      <x:c r="T31" t="str">
+        <x:v>2016/6/20 13:32:57</x:v>
+      </x:c>
+      <x:c r="U31" t="str">
+        <x:v>2016/6/20 13:36:17</x:v>
+      </x:c>
+      <x:c r="V31" t="n">
+        <x:v>68</x:v>
+      </x:c>
+      <x:c r="W31" t="n">
+        <x:v>10</x:v>
+      </x:c>
+      <x:c r="X31" t="b">
+        <x:v>1</x:v>
+      </x:c>
+    </x:row>
+  </x:sheetData>
+</x:worksheet>

@@ -51,11 +51,12 @@ namespace Young.Data.DBConnection
             return result;
         }
 
-        public DataSet GetData(DbDataAdapter adapter,string CommandText, CommandType cmdType,DbParameter[] parameters = null)
+        public DataSet GetData(DbDataAdapter adapter,string CommandText, CommandType cmdType,params DbParameter[] parameters)
         {
             DataSet ds = new DataSet();
             _cmd.CommandText = CommandText;
             _cmd.CommandType = cmdType;
+            
             if (parameters != null && parameters.Count() > 0)
             {
                 _cmd.Parameters.AddRange(parameters);

@@ -80,6 +80,9 @@ namespace Young.Data
 
         public ExcelHelper Create(string ExcelFile)
         {
+            System.IO.FileInfo fi = new System.IO.FileInfo(ExcelFile);
+            if (!fi.Directory.Exists)
+                fi.Directory.Create();
             _doc = SpreadsheetDocument.Create(ExcelFile, SpreadsheetDocumentType.Workbook);
             _wbPart = _doc.AddWorkbookPart();
             _wbPart.Workbook = new Workbook();
@@ -438,21 +441,18 @@ namespace Young.Data
 
         private  CellValues getCellType(Type dataType)
         {
-            if (dataType == typeof(string))
+            if (dataType == typeof(int) || dataType == typeof(double) || dataType == typeof(float))
             {
-                return CellValues.String;
+                return CellValues.Number;
             }
-            else if (dataType == typeof(DateTime))
-            {
-                return CellValues.String;
-            }
+            
             else if (dataType == typeof(Boolean))
             {
                 return CellValues.Boolean;
             }
             else
             {
-                return CellValues.Number;
+                return CellValues.String;
             }
         }
 
